@@ -1,6 +1,6 @@
 class User:
     genres = []
-    
+
     def __init__(self, username):
         self.username = username
 

@@ -16,4 +16,3 @@ class Share:
         self.superUsername = superUsername
         self.rating = rating
         self.comment = comment
-
