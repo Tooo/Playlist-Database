@@ -2,7 +2,7 @@ from song import *
 from playlist import *
 from user import *
 from relations import *
-from sqlsetup import *
+from sqlsetup import *0
 
 def setup():
     sqlsetup = SQLSetup()
