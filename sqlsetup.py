@@ -24,9 +24,9 @@ class SQLSetup:
         self.create_playlist_table(db)
         self.create_public_playlist_table(db)
         self.create_private_playlist_table(db)
-        # self.create_rate_table(db)
-        # self.create_contains_table(db)
-        # self.create_share_table(db)
+        self.create_rate_table(db)
+        self.create_contains_table(db)
+        self.create_share_table(db)
         # self.create_user_genre_table(db)
         # self.create_song_genre_table(db)
         db.close()
@@ -84,45 +84,39 @@ class SQLSetup:
 
     def create_rate_table(self, db):
         c = db.cursor()
-        c.execute("""CREATE TABLE IF NOT EXISTS song (
-                        songID INTEGER, 
-                        name VARCHAR(255), 
-                        duration INTEGER, 
-                        artist VARCHAR(255), 
-                        PRIMARY KEY (songID)
+        c.execute("""CREATE TABLE IF NOT EXISTS Rate (
+                        username VARCHAR(255),
+                        songID INTEGER,
+                        Rating BOOLEAN, 
+                        PRIMARY KEY (username, songID),
+                        FOREIGN KEY (username) REFERENCES User (username),
+                        FOREIGN KEY (songID) REFERENCES Song (songID)
         )""")
         c.close()
 
     def create_contains_table(self, db):
         c = db.cursor()
-        c.execute("""CREATE TABLE IF NOT EXISTS song (
+        c.execute("""CREATE TABLE IF NOT EXISTS Contains (
                         songID INTEGER, 
                         name VARCHAR(255), 
-                        duration INTEGER, 
-                        artist VARCHAR(255), 
-                        PRIMARY KEY (songID)
-        )""")
-        c.close()
-    
-    def create_contains_table(self, db):
-        c = db.cursor()
-        c.execute("""CREATE TABLE IF NOT EXISTS song (
-                        songID INTEGER, 
-                        name VARCHAR(255), 
-                        duration INTEGER, 
-                        artist VARCHAR(255), 
-                        PRIMARY KEY (songID)
+                        PRIMARY KEY (songID, name),
+                        FOREIGN KEY (songID) REFERENCES Song (songID),
+                        FOREIGN KEY (name) REFERENCES Playlist (name)
         )""")
         c.close()
     
     def create_share_table(self, db):
         c = db.cursor()
-        c.execute("""CREATE TABLE IF NOT EXISTS song (
-                        songID INTEGER, 
+        c.execute("""CREATE TABLE IF NOT EXISTS Share (
+                        username VARCHAR(255), 
                         name VARCHAR(255), 
-                        duration INTEGER, 
-                        artist VARCHAR(255), 
-                        PRIMARY KEY (songID)
+                        superUsername VARCHAR(255),
+                        rating BOOLEAN,
+                        comment VARCHAR(255), 
+                        PRIMARY KEY (username, name, superusername),
+                        FOREIGN KEY (username) REFERENCES User (username),
+                        FOREIGN KEY (name) REFERENCES Playlist (name),
+                        FOREIGN KEY (superUsername) REFERENCES User (username)
         )""")
         c.close()\
     
