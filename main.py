@@ -8,14 +8,14 @@ def introduction_prints():
     print("** Playlist Database **")
     print("1 - Login")
 
-db = mysql.connector.connect(
-    host="localhost",
-    user="user",
-    password="password"
-)
+# db = mysql.connector.connect(
+#     host="localhost",
+#     user="user",
+#     password="password"
+# )
 
-cursor = db.cursor()
-cursor.execute("CREATE DATABASE IF NOT EXISTS playlistdatabase")
+# cursor = db.cursor()
+# cursor.execute("CREATE DATABASE IF NOT EXISTS playlistdatabase")
 
 mydb = mysql.connector.connect(
     host="localhost",
@@ -26,8 +26,15 @@ mydb = mysql.connector.connect(
 
 mycursor = mydb.cursor()
 
-mycursor.execute("CREATE TABLE IF NOT EXISTS user (username VARCHAR(255))")
-mycursor.execute("SHOW TABLES")
+# mycursor.execute("CREATE TABLE IF NOT EXISTS user (username VARCHAR(255))")
+# mycursor.execute("SHOW TABLES")
+
+insert = "INSERT INTO user (username) VALUES (%s)"
+user = "John"
+mycursor.execute(insert, (user,))
+mydb.commit()
+
+print(mycursor.rowcount, " record insert.")
 
 for x in mycursor:
     print(x)
