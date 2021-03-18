@@ -2,7 +2,7 @@ from song import *
 from playlist import *
 from user import *
 from relations import *
-from sqlsetup import *0
+from sqlsetup import *
 
 def setup():
     sqlsetup = SQLSetup()
@@ -21,23 +21,3 @@ if (input1 == "1"):
     username = input("Enter Username: ")
     user = User(username)
     print(user.username + " has been created.")
-
-
-# mydb = mysql.connector.connect(
-#     host="localhost",
-#     user="user",
-#     password="password",
-#     database="playlistdatabase"
-# )
-
-# mycursor = mydb.cursor()
-
-# insert = "INSERT INTO user (username) VALUES (%s)"
-# user = "John"
-# mycursor.execute(insert, (user,))
-# mydb.commit()
-
-# print(mycursor.rowcount, " record insert.")
-
-# for x in mycursor:
-#     print(x)
