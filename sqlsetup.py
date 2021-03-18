@@ -27,8 +27,8 @@ class SQLSetup:
         self.create_rate_table(db)
         self.create_contains_table(db)
         self.create_share_table(db)
-        # self.create_user_genre_table(db)
-        # self.create_song_genre_table(db)
+        self.create_user_genre_table(db)
+        self.create_song_genre_table(db)
         db.close()
 
     def create_song_table(self, db):
@@ -120,24 +120,22 @@ class SQLSetup:
         )""")
         c.close()\
     
-    def create_user_genre_tabl(self, db):
+    def create_user_genre_table(self, db):
         c = db.cursor()
-        c.execute("""CREATE TABLE IF NOT EXISTS song (
-                        songID INTEGER, 
-                        name VARCHAR(255), 
-                        duration INTEGER, 
-                        artist VARCHAR(255), 
-                        PRIMARY KEY (songID)
+        c.execute("""CREATE TABLE IF NOT EXISTS UserGenre (
+                        username VARCHAR(255), 
+                        genre VARCHAR(255), 
+                        PRIMARY KEY (username, genre),
+                        FOREIGN KEY (username) REFERENCES User (username)
         )""")
         c.close()
     
     def create_song_genre_table(self, db):
         c = db.cursor()
-        c.execute("""CREATE TABLE IF NOT EXISTS song (
+        c.execute("""CREATE TABLE IF NOT EXISTS SongGenre (
                         songID INTEGER, 
-                        name VARCHAR(255), 
-                        duration INTEGER, 
-                        artist VARCHAR(255), 
-                        PRIMARY KEY (songID)
+                        genre VARCHAR(255), 
+                        PRIMARY KEY (songID, genre),
+                        FOREIGN KEY (songID) REFERENCES Song (songID)
         )""")
         c.close()
