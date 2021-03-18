@@ -31,4 +31,16 @@ if (input1 == "1"):
         else:
             print("Bye!")
     else:
-        print("Logining to " + user.username)    
+        print("Logining to " + user.username)
+    user = userManager.get_user(username)
+    command = input("Enter a command: (insert/delete)")
+    if command == "delete":
+        command = input("Delete genre or user?: (genre/user)")
+        if command =="user":
+            userManager.delete_user(user.username)
+        elif command == "genre":
+            command = input("Genre to be deleted:")
+            userManager.delete_user_genre(user,command)
+    elif command == "insert":
+        command = input("Genre to be inserted:")
+        userManager.insert_user_genre(user,command)

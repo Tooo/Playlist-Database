@@ -5,11 +5,7 @@ class User:
 
     def __init__(self, username):
         self.username = username
-
-class UserGenre:
-    def __init__(self, username, genre):
-        self.username = username
-        self.genre = genre
+        self.genre = []
 
 class UserManager:
     def database(self):
@@ -44,10 +40,42 @@ class UserManager:
             return None
         return User(user[0])
     
-    # def delete_user(self, username):
+    def delete_user(self, username):
+        db = self.database()
+        c = db.cursor()
+        sql = "DELETE FROM user WHERE username = %s"
+        c.execute(sql, (username, ))
+        print("record(s) deleted") 
+        db.commit()
+        c.close()
+        db.close()
+        
+    def insert_user_genre(self, user, genre):
+        db = self.database()
+        c = db.cursor()
+        sql = "INSERT INTO usergenre (username, genre) VALUES (%s,%s)"
+        val = user.username
+        c.execute(sql, (val, genre))
+        db.commit()
+        c.close()
+        db.close()
 
-    # def insert_user_genre(self, user, genre):
-
-    # def get_user_genre(self, user):
-
-    # def delete_user_genre(self, user, genre):
+    def get_user_genre(self, user):
+        db = self.database()
+        c = db.cursor()
+        sql = "SELECT genre FROM usergenre WHERE username = %s"
+        val = user.username
+        c.execute(sql, (val, ))
+        db.commit()
+        c.close()
+        db.close()
+        
+    def delete_user_genre(self, user, genre):
+        db = self.database()
+        c = db.cursor()
+        sql = "DELETE FROM usergenre WHERE username = %s AND genre = %s"
+        val = user.username
+        c.execute(sql, (val,genre ))
+        db.commit()
+        c.close()
+        db.close()
