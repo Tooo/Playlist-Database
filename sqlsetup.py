@@ -118,7 +118,7 @@ class SQLSetup:
                         FOREIGN KEY (name) REFERENCES Playlist (name),
                         FOREIGN KEY (superUsername) REFERENCES User (username)
         )""")
-        c.close()\
+        c.close()
     
     def create_user_genre_table(self, db):
         c = db.cursor()
