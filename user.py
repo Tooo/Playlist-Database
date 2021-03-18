@@ -43,3 +43,11 @@ class UserManager:
         if (user == None):
             return None
         return User(user[0])
+    
+    # def delete_user(self, username):
+
+    # def insert_user_genre(self, user, genre):
+
+    # def get_user_genre(self, user):
+
+    # def delete_user_genre(self, user, genre):
