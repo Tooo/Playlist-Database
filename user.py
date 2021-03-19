@@ -10,7 +10,8 @@ class User:
 
 
 class UserManager:
-    def database(self):
+    @staticmethod
+    def database():
         db = mysql.connector.connect(
             host="localhost",
             user="user",
@@ -38,7 +39,7 @@ class UserManager:
         db.commit()
         c.close()
         db.close()
-        if (user == None):
+        if user is None:
             return None
         return User(user[0])
 

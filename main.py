@@ -6,8 +6,9 @@ from sqlsetup import *
 
 
 def setup():
-    create_playlist_database()
-    create_all_tables()
+    sqlSetup = SQLSetup()
+    sqlSetup.create_playlist_database()
+    sqlSetup.create_all_tables()
 
 
 def introduction_prints():

@@ -3,8 +3,9 @@ from sqlsetup import *
 from user import *
 
 app = Flask(__name__)
-create_playlist_database()
-create_all_tables()
+sqlSetup = SQLSetup()
+sqlSetup.create_playlist_database()
+sqlSetup.create_all_tables()
 
 
 @app.route('/')
@@ -24,7 +25,6 @@ def main():
             userManager.insert_user(newUser)
         else:
             message = "Hello " + username
-        result = request.form
         return render_template("main.html", message=message)
 
 
