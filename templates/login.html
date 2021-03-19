@@ -1,10 +1,17 @@
 <!doctype html>
 <html lang="en">
-   <body>
-      <form action = "http://localhost:5000/main" method = "POST">
-         <p>Enter Username:</p>
-         <p><input type = "text" name = "username" /></p>
-         <p><input type = "submit" value = "submit" /></p>
-      </form>
-   </body>
+    <head>
+        <title>Playlist Database</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename ='css/login.css') }}">
+    </head>
+    <body>
+        <header>
+            <h1>Playlist Database</h1>
+        </header>
+        <form action = "http://localhost:5000/main" method = "POST">
+            <p>Enter Username:</p>
+            <p><input type = "text" name = "username" /></p>
+            <p><input type = "submit" value = "submit" /></p>
+        </form>
+    </body>
 </html>
