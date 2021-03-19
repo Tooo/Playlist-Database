@@ -2,10 +2,18 @@
 <html lang="en">
     <head>
         <title>Playlist Database</title>
-        <link rel="stylesheet" href="{{ url_for('static', filename ='css/main.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename ='styles/main.css') }}">
     </head>
-    <body class="center">
+    <body>
         <h1>{{message}}</h1>
+        <table>
+            {% for genre in genres %}
+                <tr>
+                    <th>{{ genre }}</th>
+                </tr>
+            {% endfor %}
+        </table>
+
         <form action = "http://localhost:5000/" method = "POST">
             <p><input type = "submit" name = "logout" value = "Logout" /></p>
             <p><input type = "submit" name = "delete" value = "Delete" /></p>

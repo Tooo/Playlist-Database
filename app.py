@@ -21,17 +21,19 @@ def login():
 @app.route('/main', methods=['POST', 'GET'])
 def main():
     if request.method == 'POST':
-        username = request.form['username']
-        userManager = UserManager()
-        user = userManager.get_user(username)
-        if user is None:
-            user = User(username)
-            message = username + " has been created"
-            userManager.insert_user(user)
-        else:
-            message = "Hello " + username
-        resp = make_response(render_template("main.html", message=message))
-        resp.set_cookie('username', username)
+        if 'username' in request.form:
+            username = request.form['username']
+            userManager = UserManager()
+            user = userManager.get_user(username)
+            if user is None:
+                user = User(username)
+                message = username + " has been created"
+                userManager.insert_user(user)
+            else:
+                message = "Hello " + username
+            genres = userManager.get_user_genre(user)
+            resp = make_response(render_template("main.html", message=message, genres=genres))
+            resp.set_cookie('username', username)
         return resp
 
 

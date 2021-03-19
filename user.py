@@ -48,7 +48,7 @@ class UserManager:
         c = db.cursor()
         sql = "DELETE FROM user WHERE username = %s"
         c.execute(sql, (username,))
-        print("record(s) deleted")
+        print("user(s) deleted")
         db.commit()
         c.close()
         db.close()
@@ -65,13 +65,15 @@ class UserManager:
 
     def get_user_genre(self, user):
         db = self.database()
-        c = db.cursor()
+        c = db.cursor(buffered=True)
         sql = "SELECT genre FROM usergenre WHERE username = %s"
         val = user.username
         c.execute(sql, (val,))
         db.commit()
+        genres = c.fetchall()
         c.close()
         db.close()
+        return genres
 
     def delete_user_genre(self, user, genre):
         db = self.database()
