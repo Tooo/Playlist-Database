@@ -7,6 +7,7 @@ class Song:
         self.artist = artist
         self.duration = duration
 
+
 class SongGenre:
     def __init__(self, songID, genre):
         self.songID = songID

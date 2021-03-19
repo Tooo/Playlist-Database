@@ -13,4 +13,4 @@ class PublicPlaylist(Playlist):
 class PrivatePlaylist(Playlist):
     def __init__(self, name, username, date, password):
         super().__init__(name, username, date)
-        self.password
+        self.password = password

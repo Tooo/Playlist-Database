@@ -4,10 +4,12 @@ class Rate:
         self.songID = songID
         self.rating = rating
 
+
 class Contains:
     def __init__(self, songID, name):
         self.songID = songID
         self.name = name
+
 
 class Share:
     def __init__(self, username, name, superUsername, rating, comment):
