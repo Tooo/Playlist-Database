@@ -6,17 +6,24 @@
     </head>
     <body>
         <h1>{{message}}</h1>
-        <table>
+        <form action="http://localhost:5000/main" method="Post">
+            <p><input type = "text" name = "genre" /></p>
+            <p><input type="submit" name="genreButton" value="Add/Remove Genre" /></p>
+        </form>
+        <table class="center">
+            <tr>
+                <th>Genres</th>
+            </tr>
             {% for genre in genres %}
                 <tr>
-                    <th>{{ genre }}</th>
+                    <td>{{ genre[0] }}</td>
                 </tr>
             {% endfor %}
         </table>
 
-        <form action = "http://localhost:5000/" method = "POST">
-            <p><input type = "submit" name = "logout" value = "Logout" /></p>
-            <p><input type = "submit" name = "delete" value = "Delete" /></p>
+        <form action="http://localhost:5000/" method="POST">
+            <p><input type="submit" name="logout" value="Logout" /></p>
+            <p><input type="submit" name="delete" value="Delete" /></p>
         </form>
     </body>
 </html>

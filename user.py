@@ -84,3 +84,18 @@ class UserManager:
         db.commit()
         c.close()
         db.close()
+
+    def is_genre_in_user_genre(self, user, genre):
+        db = self.database()
+        c = db.cursor(buffered=True)
+        sql = "SELECT * FROM usergenre WHERE username = %s AND genre = %s"
+        val = user.username
+        c.execute(sql, (val, genre))
+        db.commit()
+        genres = c.fetchone()
+        c.close()
+        db.close()
+        if genres is None:
+            return False
+        else:
+            return True

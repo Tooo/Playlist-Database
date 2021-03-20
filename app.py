@@ -21,9 +21,9 @@ def login():
 @app.route('/main', methods=['POST', 'GET'])
 def main():
     if request.method == 'POST':
-        if 'username' in request.form:
+        userManager = UserManager()
+        if 'login' in request.form:
             username = request.form['username']
-            userManager = UserManager()
             user = userManager.get_user(username)
             if user is None:
                 user = User(username)
@@ -31,9 +31,18 @@ def main():
                 userManager.insert_user(user)
             else:
                 message = "Hello " + username
-            genres = userManager.get_user_genre(user)
-            resp = make_response(render_template("main.html", message=message, genres=genres))
-            resp.set_cookie('username', username)
+        elif 'genreButton' in request.form:
+            username = request.cookies.get('username')
+            genre = request.form['genre']
+            user = User(username)
+            if userManager.is_genre_in_user_genre(user, genre):
+                userManager.delete_user_genre(user, genre)
+            else:
+                userManager.insert_user_genre(user, genre)
+            message = "Hello " + username
+        genres = userManager.get_user_genre(user)
+        resp = make_response(render_template("main.html", message=message, genres=genres))
+        resp.set_cookie('username', username)
         return resp
 
 
