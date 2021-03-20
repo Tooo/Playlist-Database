@@ -6,6 +6,12 @@ body {
 
 h1 {
     font-size: larger;
+    background-color: lightblue;
+    padding: 4px;
+}
+
+h2 {
+    font-size: large;
 }
 
 table, th, td {

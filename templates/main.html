@@ -5,7 +5,10 @@
         <link rel="stylesheet" href="{{ url_for('static', filename ='styles/main.css') }}">
     </head>
     <body>
-        <h1>{{message}}</h1>
+        <header>
+            <h1>Playlist Database</h1>
+        </header>
+        <h2>{{message}}</h2>
         <form action="http://localhost:5000/main" method="Post">
             <p><input type = "text" name = "genre" /></p>
             <p><input type="submit" name="genreButton" value="Add/Remove Genre" /></p>
