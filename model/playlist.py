@@ -1,4 +1,5 @@
 import mysql.connector
+
 from sqlsetup import *
 
 
@@ -30,11 +31,11 @@ class PlaylistManager:
         )
         return db
 
-    def insert_playlist(self, username, name, date):
+    def insert_playlist(self, playlist):
         db = self.database()
         c = db.cursor()
         sql = "INSERT INTO Playlist (name,username,date) VALUES (%s,%s,%d)"
-        c.execute(sql, (name, username, date))
+        c.execute(sql, (playlist.name, playlist.username, playlist.date))
         db.commit()
         c.close()
         db.close()
@@ -44,13 +45,13 @@ class PlaylistManager:
         c = db.cursor()
         sql = "SELECT * FROM playlist WHERE username = %s AND name = %s"
         c.execute(sql, (username, name))
-        user = c.fetchone()
+        playlist = c.fetchone()
         db.commit()
         c.close()
         db.close()
-        if (user == None):
+        if playlist is None:
             return None
-        return User(user[0])
+        return Playlist(playlist[0], playlist[1], playlist[[2]])
 
     def delete_playlist(self, username, name):
         db = self.database()
@@ -61,6 +62,3 @@ class PlaylistManager:
         db.commit()
         c.close()
         db.close()
-
-
-
