@@ -1,7 +1,4 @@
-from song import *
-from playlist import *
-from user import *
-from relations import *
+from model.user import *
 from sqlsetup import *
 
 

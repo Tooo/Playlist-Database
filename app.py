@@ -1,6 +1,6 @@
 from flask import *
 from sqlsetup import *
-from user import *
+from model.user import *
 
 app = Flask(__name__)
 sqlSetup = SQLSetup()
