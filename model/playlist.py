@@ -1,4 +1,5 @@
 import mysql.connector
+from sqlsetup import *
 
 
 class Playlist:
@@ -22,10 +23,10 @@ class PrivatePlaylist(Playlist):
 class PlaylistManager:
     def database(self):
         db = mysql.connector.connect(
-            host="localhost",
-            user="user",
-            password="password",
-            database="playlistdatabase"
+            host=SQLSetup.host,
+            user=SQLSetup.user,
+            password=SQLSetup.password,
+            database=SQLSetup.db
         )
         return db
 
