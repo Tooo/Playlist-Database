@@ -102,12 +102,14 @@ class SQLSetup:
 
     def create_contains_table(self, db):
         c = db.cursor()
-        c.execute("""CREATE TABLE IF NOT EXISTS Contains (
-                        songID INTEGER, 
+        c.execute("""CREATE TABLE IF NOT EXISTS Contains ( 
                         name VARCHAR(255), 
-                        PRIMARY KEY (songID, name),
+                        username VARCHAR(255),
+                        songID INTEGER,
+                        PRIMARY KEY (name, username, songID),
                         FOREIGN KEY (songID) REFERENCES Song (songID),
-                        FOREIGN KEY (name) REFERENCES Playlist (name)
+                        FOREIGN KEY (name) REFERENCES Playlist (name),
+                        FOREIGN KEY (username) REFERENCES User (username)
         )""")
         c.close()
 
