@@ -40,11 +40,11 @@ class PlaylistManager:
         c.close()
         db.close()
 
-    def get_playlist(self, username, name):
+    def get_playlist(self, name, username):
         db = self.database()
         c = db.cursor()
-        sql = "SELECT * FROM playlist WHERE username = %s AND name = %s"
-        c.execute(sql, (username, name))
+        sql = "SELECT * FROM Playlist WHERE name = %s AND username = %s"
+        c.execute(sql, (name, username))
         playlist = c.fetchone()
         db.commit()
         c.close()
@@ -53,12 +53,44 @@ class PlaylistManager:
             return None
         return Playlist(playlist[0], playlist[1], playlist[[2]])
 
-    def delete_playlist(self, username, name):
+    def delete_playlist(self, name, username):
         db = self.database()
         c = db.cursor()
-        sql = "DELETE FROM Playlist WHERE username = %s AND name = %s"
-        c.execute(sql, (username, name))
-        print("record(s) deleted")
+        sql = "DELETE FROM Playlist WHERE name = %s AND username = %s"
+        c.execute(sql, (name, username))
+        print("playlist deleted")
         db.commit()
         c.close()
         db.close()
+
+    def insert_song_in_playlist(self, name, username, songID):
+        db = self.database()
+        c = db.cursor()
+        sql = "INSERT INTO Contains (name, username, songID) VALUES (%s,%s,%d)"
+        c.execute(sql, (name, username, songID))
+        db.commit()
+        c.close()
+        db.close()
+
+    def get_songs_in_playlist(self, name, username):
+        db = self.database()
+        c = db.cursor()
+        c.execute(sql, (name, username, songID))
+        sql = "SELECT songID FROM Contains WHERE name = %s AND username = %s"
+        c.execute(sql, (name, username))
+        songsList = c.fetchall()
+        db.commit()
+        c.close()
+        db.close()
+        return songsList
+
+    def delete_song_in_playlist(self, name, username, songID):
+        db = self.database()
+        c = db.cursor()
+        sql = "DELETE FROM Contains WHERE name = %s AND username = %s AND songID = %d"
+        c.execute(sql, (name, username, songID))
+        print("song in playlist deleted")
+        db.commit()
+        c.close()
+        db.close()
+
