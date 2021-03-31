@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Playlist</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename ='styles/main.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Playlist Database</h1>
+    </header>
+    <form action="http://localhost:5000/playlist" method="POST">
+            <p><input type="text" name="playlist" /></p>
+            <p><input type="submit" name="playlistButton" value="Add/Remove Playlist" /></p>
+    </form>
+    <table class="center">
+        <tr>
+            <th>Playlists</th>
+        </tr>
+        {% for playlist in playlists %} <tr>
+            <td>{{ genre[0] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
