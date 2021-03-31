@@ -53,6 +53,17 @@ class PlaylistManager:
             return None
         return Playlist(playlist[0], playlist[1], playlist[[2]])
 
+    def get_user_playlists(self, username):
+        db = self.database()
+        c = db.cursor()
+        sql = "SELECT name FROM Playlist WHERE username = %s"
+        c.execute(sql, (username, ))
+        playlists = c.fetchall()
+        db.commit()
+        c.close()
+        db.close()
+        return playlists
+
     def delete_playlist(self, name, username):
         db = self.database()
         c = db.cursor()
