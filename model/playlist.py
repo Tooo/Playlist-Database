@@ -34,8 +34,8 @@ class PlaylistManager:
     def insert_playlist(self, playlist):
         db = self.database()
         c = db.cursor()
-        sql = "INSERT INTO Playlist (name,username,date) VALUES (%s,%s,%d)"
-        c.execute(sql, (playlist.name, playlist.username, playlist.date))
+        sql = "INSERT INTO Playlist (name,username,date) VALUES (%s,%s,playlist.date)"
+        c.execute(sql, (playlist.name, playlist.username))
         db.commit()
         c.close()
         db.close()
@@ -91,8 +91,8 @@ class PlaylistManager:
     def insert_song_in_playlist(self, name, username, songID):
         db = self.database()
         c = db.cursor()
-        sql = "INSERT INTO Contains (name, username, songID) VALUES (%s,%s,%d)"
-        c.execute(sql, (name, username, songID))
+        sql = "INSERT INTO Contains (name, username, songID) VALUES (%s,%s,songID)"
+        c.execute(sql, (name, username))
         db.commit()
         c.close()
         db.close()
