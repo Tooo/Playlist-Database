@@ -9,8 +9,11 @@
             <h1>Playlist Database</h1>
         </header>
         <h2>{{message}}</h2>
-        <form action="http://localhost:5000/main" method="Post">
-            <p><input type = "text" name = "genre" /></p>
+        <form action="http://localhost:5000/playlist" method="POST">
+            <p><input type="submit" name="playlist" value="Playlist"></p>
+        </form>
+        <form action="http://localhost:5000/main" method="POST">
+            <p><input type="text" name="genre" /></p>
             <p><input type="submit" name="genreButton" value="Add/Remove Genre" /></p>
         </form>
         <table class="center">

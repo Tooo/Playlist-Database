@@ -1,4 +1,6 @@
 from flask import *
+
+from model.playlist import *
 from sqlsetup import *
 from model.user import *
 
@@ -43,6 +45,23 @@ def main():
         genres = userManager.get_user_genre(user)
         resp = make_response(render_template("main.html", message=message, genres=genres))
         resp.set_cookie('username', username)
+        return resp
+
+
+@app.route('/playlist', methods=['POST', 'GET'])
+def playlist_page():
+    if request.method == 'POST':
+        username = request.cookies.get('username')
+        playlistManager = PlaylistManager()
+        if 'playlistButton' in request.form:
+            playlistName = request.form['playlist']
+            if playlistManager.is_playlist_in_user(playlistName, username):
+                playlistManager.delete_playlist(playlistName, username)
+            else:
+                playlist = Playlist(playlistName, username, 0)
+                playlistManager.insert_playlist(playlist)
+        playlists = playlistManager.get_user_playlists(username)
+        resp = make_response(render_template("playlist.html", playlists=playlists))
         return resp
 
 
