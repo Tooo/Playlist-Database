@@ -69,7 +69,6 @@ class PlaylistManager:
         c = db.cursor()
         sql = "DELETE FROM Playlist WHERE name = %s AND username = %s"
         c.execute(sql, (name, username))
-        print("playlist deleted")
         db.commit()
         c.close()
         db.close()
@@ -114,7 +113,6 @@ class PlaylistManager:
         c = db.cursor()
         sql = "DELETE FROM Contains WHERE name = %s AND username = %s AND songID = %d"
         c.execute(sql, (name, username, songID))
-        print("song in playlist deleted")
         db.commit()
         c.close()
         db.close()
