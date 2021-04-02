@@ -4,10 +4,31 @@ body {
     font-family: "Helvetica Neue", Arial, sans-serif;
 }
 
+#navbar {
+  overflow: hidden;
+  background-color: #333;
+}
+
+#navbar input {
+  float: left;
+  display: block;
+  color: white;
+  background-color: gray;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+#navbar input:hover {
+  background-color: lightgray;
+  color: black;
+}
+
 h1 {
-    font-size: larger;
+    font-size: x-large;
     background-color: lightblue;
-    padding: 4px;
+    padding: 2px;
 }
 
 h2 {

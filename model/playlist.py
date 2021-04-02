@@ -90,7 +90,7 @@ class PlaylistManager:
     def insert_song_in_playlist(self, name, username, songID):
         db = self.database()
         c = db.cursor()
-        sql = "INSERT INTO Contains (name, username, songID) VALUES (%s,%s,songID)"
+        sql = "INSERT INTO Contains (name, username, songID) VALUES (%s,%s,%d)"
         c.execute(sql, (name, username))
         db.commit()
         c.close()
@@ -99,7 +99,6 @@ class PlaylistManager:
     def get_songs_in_playlist(self, name, username):
         db = self.database()
         c = db.cursor()
-        c.execute(sql, (name, username, songID))
         sql = "SELECT songID FROM Contains WHERE name = %s AND username = %s"
         c.execute(sql, (name, username))
         songsList = c.fetchall()

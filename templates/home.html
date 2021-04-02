@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Playlist</title>
+    <title>Playlist Database</title>
     <link rel="stylesheet" href="{{ url_for('static', filename ='styles/main.css') }}">
 </head>
+
 <header>
     <h1>Playlist Database</h1>
 </header>
+
 <nav id='navbar'>
     <form action="http://localhost:5000/home" method="POST">
         <input type="submit" name="home" value="Home">
@@ -20,19 +21,21 @@
         <input type="submit" name="delete" value="Delete" />
     </form>
 </nav>
-<body>
 
-    <form action="http://localhost:5000/playlist" method="POST">
-            <p><input type="text" name="playlist" /></p>
-            <p><input type="submit" name="playlistButton" value="Add/Remove Playlist" /></p>
+<body>
+    <h2>{{message}}</h2>
+    <form action="http://localhost:5000/main" method="POST">
+        <p><input type="text" name="genre" /></p>
+        <p><input type="submit" name="genreButton" value="Add/Remove Genre" /></p>
     </form>
     <table class="center">
         <tr>
-            <th>Playlists</th>
+            <th>Genres</th>
         </tr>
-        {% for playlist in playlists %} <tr>
-            <td>{{ playlist[0] }}</td>
-        </tr>
+        {% for genre in genres %}
+            <tr>
+                <td>{{ genre[0] }}</td>
+            </tr>
         {% endfor %}
     </table>
 </body>
