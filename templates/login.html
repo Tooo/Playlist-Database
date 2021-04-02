@@ -1,16 +1,16 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-    <head>
-        <title>Playlist Database</title>
-        <link rel="stylesheet" href="{{ url_for('static', filename ='styles/main.css') }}">
-    </head>
-    <body>
-        <header>
-            <h1>Playlist Database</h1>
-        </header>
-        <form action="http://localhost:5000/home" method="POST">
-            <p>Enter Username: <input type="text" name="username" /></p>
-            <p><input type = "submit" name="login" value="Login" /></p>
-        </form>
-    </body>
+<head>
+    <title>Playlist Database</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename ='styles/main.css') }}">
+</head>
+<header>
+    <h1>Playlist Database</h1>
+</header>
+<body>
+    <form action="http://localhost:5000/home" method="POST">
+        <p>Enter Username: <input type="text" name="username" /></p>
+        <p><input type = "submit" name="login" value="Login" /></p>
+    </form>
+</body>
 </html>

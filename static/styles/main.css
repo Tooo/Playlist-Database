@@ -5,13 +5,15 @@ body {
 }
 
 #navbar {
+  overflow: hidden;
   background-color: #333;
 }
 
 #navbar input {
   float: left;
   display: block;
-  color: #f2f2f2;
+  color: white;
+  background-color: gray;
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
@@ -19,19 +21,14 @@ body {
 }
 
 #navbar input:hover {
-  background-color: #ddd;
+  background-color: lightgray;
   color: black;
 }
 
-#navbar input.active {
-  background-color: #4CAF50;
-  color: white;
-}
-
 h1 {
-    font-size: larger;
+    font-size: x-large;
     background-color: lightblue;
-    padding: 4px;
+    padding: 2px;
 }
 
 h2 {

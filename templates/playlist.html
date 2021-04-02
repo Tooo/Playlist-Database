@@ -5,10 +5,23 @@
     <title>Playlist</title>
     <link rel="stylesheet" href="{{ url_for('static', filename ='styles/main.css') }}">
 </head>
+<header>
+    <h1>Playlist Database</h1>
+</header>
+<nav id='navbar'>
+    <form action="http://localhost:5000/home" method="POST">
+        <input type="submit" name="home" value="Home">
+    </form>
+    <form action="http://localhost:5000/playlist" method="POST">
+        <input type="submit" name="playlist" value="Playlist">
+    </form>
+    <form action="http://localhost:5000/" method="POST">
+        <input type="submit" name="logout" value="Logout" />
+        <input type="submit" name="delete" value="Delete" />
+    </form>
+</nav>
 <body>
-    <header>
-        <h1>Playlist Database</h1>
-    </header>
+
     <form action="http://localhost:5000/playlist" method="POST">
             <p><input type="text" name="playlist" /></p>
             <p><input type="submit" name="playlistButton" value="Add/Remove Playlist" /></p>

@@ -44,6 +44,7 @@ def home():
         else:
             username = request.cookies.get('username')
             user = User(username)
+            message = "Hello " + username
         genres = userManager.get_user_genre(user)
         resp = make_response(render_template("home.html", message=message, genres=genres))
         resp.set_cookie('username', username)
