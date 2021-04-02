@@ -1,7 +1,6 @@
 from flask import *
 
 from model.playlist import *
-from sqlsetup import *
 from model.user import *
 
 app = Flask(__name__)
@@ -20,8 +19,8 @@ def login():
     return render_template('login.html')
 
 
-@app.route('/main', methods=['POST', 'GET'])
-def main():
+@app.route('/home', methods=['POST', 'GET'])
+def home():
     if request.method == 'POST':
         userManager = UserManager()
         if 'login' in request.form:
@@ -42,8 +41,11 @@ def main():
             else:
                 userManager.insert_user_genre(user, genre)
             message = "Hello " + username
+        else:
+            username = request.cookies.get('username')
+            user = User(username)
         genres = userManager.get_user_genre(user)
-        resp = make_response(render_template("main.html", message=message, genres=genres))
+        resp = make_response(render_template("home.html", message=message, genres=genres))
         resp.set_cookie('username', username)
         return resp
 
