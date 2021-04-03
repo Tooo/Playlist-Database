@@ -1,11 +1,5 @@
+from model.song import *
 from model.user import *
-from sqlsetup import *
-
-
-def setup():
-    sqlSetup = SQLSetup()
-    sqlSetup.create_playlist_database()
-    sqlSetup.create_all_tables()
 
 
 def introduction_prints():
@@ -13,7 +7,6 @@ def introduction_prints():
     print("1 - Login")
 
 
-setup()
 introduction_prints()
 input1 = input("> ")
 
@@ -21,6 +14,7 @@ if input1 == "1":
     username = input("Enter Username: ")
     userManager = UserManager()
     user = userManager.get_user(username)
+    songManager = SongManager()
     if user is None:
         newUser = User(username)
         print(username + " not found in database. Do you want to create a new user? (y/n)")
@@ -42,5 +36,6 @@ if input1 == "1":
             command = input("Genre to be deleted:")
             userManager.delete_user_genre(user, command)
     elif command == "insert":
-        command = input("Genre to be inserted:")
-        userManager.insert_user_genre(user, command)
+        command = input("Song to be inserted:")
+        song = Song(123, 'music', 'pop', 'Cheng', '12:02')
+        songManager.insert_song(song)

@@ -1,11 +1,13 @@
 import mysql.connector
+import pandas as pd
+from config import *
 
 
 class SQLSetup:
-    host = "localhost"
-    user = "user"
-    password = "password"
-    db = "playlistdatabase"
+    host = DB_HOST
+    user = DB_USER
+    password = DB_PASSWORD
+    db = DB_DATABASE
 
     def create_playlist_database(self):
         db = mysql.connector.connect(
@@ -34,7 +36,6 @@ class SQLSetup:
         self.create_contains_table(db)
         self.create_share_table(db)
         self.create_user_genre_table(db)
-        self.create_song_genre_table(db)
         db.close()
 
     def create_song_table(self, db):
@@ -42,8 +43,9 @@ class SQLSetup:
         c.execute("""CREATE TABLE IF NOT EXISTS Song (
                         songID INTEGER, 
                         name VARCHAR(255), 
-                        duration INTEGER, 
-                        artist VARCHAR(255), 
+                        duration VARCHAR(255), 
+                        artist VARCHAR(255),
+                        genre VARCHAR(255),
                         PRIMARY KEY (songID)
         )""")
         c.close()
@@ -168,14 +170,29 @@ class SQLSetup:
         )""")
         c.close()
 
-    def create_song_genre_table(self, db):
-        c = db.cursor()
-        c.execute("""CREATE TABLE IF NOT EXISTS SongGenre (
-                        songID INTEGER, 
-                        genre VARCHAR(255), 
-                        PRIMARY KEY (songID, genre),
-                        FOREIGN KEY (songID) REFERENCES Song (songID)
-                            ON DELETE CASCADE 
-                            ON UPDATE CASCADE
-        )""")
-        c.close()
+    def import_songs(self):
+        db = mysql.connector.connect(
+            host=self.host,
+            user=self.user,
+            password=self.password,
+            database=self.db
+        )
+        df = pd.read_csv('data/billboard.csv')
+        for col, row in df.iterrows():
+            songID = row['SongID']
+            genre = row['Genre']
+            duration = row['Duration']
+            name = row['Name']
+            artist = row['Artist']
+            c = db.cursor()
+            sql = "INSERT INTO Song (songID, name, artist, duration, genre) VALUES (%s, %s, %s, %s, %s)"
+            c.execute(sql, (songID, name, artist, duration, genre))
+            db.commit()
+            c.close()
+        db.close()
+
+
+sqlSetup = SQLSetup()
+sqlSetup.create_playlist_database()
+sqlSetup.create_all_tables()
+sqlSetup.import_songs()

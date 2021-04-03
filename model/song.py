@@ -1,14 +1,44 @@
-class Song:
-    genres = []
+import mysql.connector
 
-    def __init__(self, songID, name, artist, duration):
+from config import *
+
+
+class Song:
+
+    def __init__(self, songID, name, genre, artist, duration):
         self.songID = songID
         self.name = name
+        self.genre = genre
         self.artist = artist
         self.duration = duration
 
 
-class SongGenre:
-    def __init__(self, songID, genre):
-        self.songID = songID
-        self.genre = genre
+class SongManager:
+    @staticmethod
+    def database():
+        db = mysql.connector.connect(
+            host=DB_HOST,
+            user=DB_USER,
+            password=DB_PASSWORD,
+            database=DB_DATABASE
+        )
+        return db
+
+    def insert_song(self, song):
+        db = self.database()
+        c = db.cursor()
+        sql = "INSERT INTO Song (songID, name, artist, duration, genre) VALUES (%s, %s, %s, %s, %s)"
+        c.execute(sql, (song.songID, song.name, song.artist, song.duration, song.genre))
+        db.commit()
+        c.close()
+        db.close()
+
+    def get_songs(self):
+        db = self.database()
+        c = db.cursor()
+        c.execute("SELECT * FROM Song")
+        songsList = c.fetchall()
+        db.commit()
+        c.close()
+        db.close()
+        return songsList

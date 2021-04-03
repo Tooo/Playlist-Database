@@ -1,5 +1,6 @@
 import mysql.connector
-from sqlsetup import *
+
+from config import *
 
 
 class User:
@@ -14,10 +15,10 @@ class UserManager:
     @staticmethod
     def database():
         db = mysql.connector.connect(
-            host=SQLSetup.host,
-            user=SQLSetup.user,
-            password=SQLSetup.password,
-            database=SQLSetup.db
+            host=DB_HOST,
+            user=DB_USER,
+            password=DB_PASSWORD,
+            database=DB_DATABASE
         )
         return db
 
