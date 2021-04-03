@@ -4,9 +4,6 @@ from model.playlist import *
 from model.user import *
 
 app = Flask(__name__)
-sqlSetup = SQLSetup()
-sqlSetup.create_playlist_database()
-sqlSetup.create_all_tables()
 
 
 @app.route('/', methods=['POST', 'GET'])
