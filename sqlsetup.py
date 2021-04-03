@@ -64,6 +64,8 @@ class SQLSetup:
                         date VARCHAR(255),
                         PRIMARY KEY(name, username),
                         FOREIGN KEY (username) REFERENCES User (username)
+                            ON DELETE CASCADE 
+                            ON UPDATE CASCADE
         )""")
         c.close()
 
@@ -74,6 +76,11 @@ class SQLSetup:
                         username VARCHAR(255),
                         PRIMARY KEY(name, username),
                         FOREIGN KEY (username) REFERENCES Playlist (username)
+                            ON DELETE CASCADE 
+                            ON UPDATE CASCADE,
+                        FOREIGN KEY (name) REFERENCES Playlist (name)
+                            ON DELETE CASCADE 
+                            ON UPDATE CASCADE
         )""")
         c.close()
 
@@ -85,6 +92,11 @@ class SQLSetup:
                         password VARCHAR(255),
                         PRIMARY KEY(name, username),
                         FOREIGN KEY (username) REFERENCES Playlist (username)
+                            ON DELETE CASCADE 
+                            ON UPDATE CASCADE,
+                        FOREIGN KEY (name) REFERENCES Playlist (name)
+                            ON DELETE CASCADE 
+                            ON UPDATE CASCADE
         )""")
         c.close()
 
@@ -95,8 +107,12 @@ class SQLSetup:
                         songID INTEGER,
                         Rating BOOLEAN, 
                         PRIMARY KEY (username, songID),
-                        FOREIGN KEY (username) REFERENCES User (username),
+                        FOREIGN KEY (username) REFERENCES User (username)
+                            ON DELETE CASCADE 
+                            ON UPDATE CASCADE,
                         FOREIGN KEY (songID) REFERENCES Song (songID)
+                            ON DELETE CASCADE 
+                            ON UPDATE CASCADE
         )""")
         c.close()
 
@@ -107,9 +123,15 @@ class SQLSetup:
                         username VARCHAR(255),
                         songID INTEGER,
                         PRIMARY KEY (name, username, songID),
-                        FOREIGN KEY (songID) REFERENCES Song (songID),
-                        FOREIGN KEY (name) REFERENCES Playlist (name),
+                        FOREIGN KEY (songID) REFERENCES Song (songID)
+                            ON DELETE CASCADE 
+                            ON UPDATE CASCADE,
+                        FOREIGN KEY (name) REFERENCES Playlist (name)
+                            ON DELETE CASCADE 
+                            ON UPDATE CASCADE,
                         FOREIGN KEY (username) REFERENCES User (username)
+                            ON DELETE CASCADE 
+                            ON UPDATE CASCADE
         )""")
         c.close()
 
@@ -122,9 +144,15 @@ class SQLSetup:
                         rating BOOLEAN,
                         comment VARCHAR(255), 
                         PRIMARY KEY (username, name, superusername),
-                        FOREIGN KEY (username) REFERENCES User (username),
-                        FOREIGN KEY (name) REFERENCES Playlist (name),
+                        FOREIGN KEY (username) REFERENCES User (username)
+                            ON DELETE CASCADE 
+                            ON UPDATE CASCADE,
+                        FOREIGN KEY (name) REFERENCES Playlist (name)
+                            ON DELETE CASCADE 
+                            ON UPDATE CASCADE,
                         FOREIGN KEY (superUsername) REFERENCES User (username)
+                            ON DELETE CASCADE 
+                            ON UPDATE CASCADE
         )""")
         c.close()
 
@@ -135,6 +163,8 @@ class SQLSetup:
                         genre VARCHAR(255), 
                         PRIMARY KEY (username, genre),
                         FOREIGN KEY (username) REFERENCES User (username)
+                            ON DELETE CASCADE 
+                            ON UPDATE CASCADE
         )""")
         c.close()
 
@@ -145,5 +175,7 @@ class SQLSetup:
                         genre VARCHAR(255), 
                         PRIMARY KEY (songID, genre),
                         FOREIGN KEY (songID) REFERENCES Song (songID)
+                            ON DELETE CASCADE 
+                            ON UPDATE CASCADE
         )""")
         c.close()

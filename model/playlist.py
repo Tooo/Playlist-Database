@@ -34,8 +34,8 @@ class PlaylistManager:
     def insert_playlist(self, playlist):
         db = self.database()
         c = db.cursor()
-        sql = "INSERT INTO Playlist (name,username,date) VALUES (%s,%s,%d)"
-        c.execute(sql, (playlist.name, playlist.username, playlist.date))
+        sql = "INSERT INTO Playlist (name,username,date) VALUES (%s,%s,playlist.date)"
+        c.execute(sql, (playlist.name, playlist.username))
         db.commit()
         c.close()
         db.close()
@@ -53,21 +53,45 @@ class PlaylistManager:
             return None
         return Playlist(playlist[0], playlist[1], playlist[[2]])
 
+    def get_user_playlists(self, username):
+        db = self.database()
+        c = db.cursor()
+        sql = "SELECT name FROM Playlist WHERE username = %s"
+        c.execute(sql, (username,))
+        playlists = c.fetchall()
+        db.commit()
+        c.close()
+        db.close()
+        return playlists
+
     def delete_playlist(self, name, username):
         db = self.database()
         c = db.cursor()
         sql = "DELETE FROM Playlist WHERE name = %s AND username = %s"
         c.execute(sql, (name, username))
-        print("playlist deleted")
         db.commit()
         c.close()
         db.close()
+
+    def is_playlist_in_user(self, name, username):
+        db = self.database()
+        c = db.cursor(buffered=True)
+        sql = "SELECT * FROM Playlist WHERE name = %s AND username = %s"
+        c.execute(sql, (name, username))
+        db.commit()
+        playlist = c.fetchone()
+        c.close()
+        db.close()
+        if playlist is None:
+            return False
+        else:
+            return True
 
     def insert_song_in_playlist(self, name, username, songID):
         db = self.database()
         c = db.cursor()
         sql = "INSERT INTO Contains (name, username, songID) VALUES (%s,%s,%d)"
-        c.execute(sql, (name, username, songID))
+        c.execute(sql, (name, username))
         db.commit()
         c.close()
         db.close()
@@ -75,7 +99,6 @@ class PlaylistManager:
     def get_songs_in_playlist(self, name, username):
         db = self.database()
         c = db.cursor()
-        c.execute(sql, (name, username, songID))
         sql = "SELECT songID FROM Contains WHERE name = %s AND username = %s"
         c.execute(sql, (name, username))
         songsList = c.fetchall()
@@ -89,8 +112,6 @@ class PlaylistManager:
         c = db.cursor()
         sql = "DELETE FROM Contains WHERE name = %s AND username = %s AND songID = %d"
         c.execute(sql, (name, username, songID))
-        print("song in playlist deleted")
         db.commit()
         c.close()
         db.close()
-
