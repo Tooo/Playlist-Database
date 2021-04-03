@@ -64,6 +64,8 @@ class SQLSetup:
                         date VARCHAR(255),
                         PRIMARY KEY(name, username),
                         FOREIGN KEY (username) REFERENCES User (username)
+                            ON DELETE CASCADE 
+                            ON UPDATE CASCADE
         )""")
         c.close()
 
