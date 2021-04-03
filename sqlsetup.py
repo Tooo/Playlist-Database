@@ -1,6 +1,6 @@
 import mysql.connector
 import pandas as pd
-from model.song import *
+
 
 class SQLSetup:
     host = "localhost"
@@ -47,7 +47,6 @@ class SQLSetup:
                         genre VARCHAR(255),
                         PRIMARY KEY (songID)
         )""")
-        #self.import_songs()
         c.close()
 
     def create_user_table(self, db):
@@ -169,15 +168,24 @@ class SQLSetup:
                             ON UPDATE CASCADE
         )""")
         c.close()
-        
+
     def import_songs(self):
-        songManager=SongManager()
+        db = mysql.connector.connect(
+            host=self.host,
+            user=self.user,
+            password=self.password,
+            database=self.db
+        )
         df = pd.read_csv('billboard.csv')
-        for col,row in df.iterrows():
+        for col, row in df.iterrows():
             songID = row['SongID']
             genre = row['Genre']
             duration = row['Duration']
             name = row['Name']
             artist = row['Artist']
-            song = Song(songID,name,genre,artist,duration)
-            songManager.insert_song(song)
+            c = db.cursor()
+            sql = "INSERT INTO Song (songID, name, artist, duration, genre) VALUES (%s, %s, %s, %s, %s)"
+            c.execute(sql, (songID, name, artist, duration, genre))
+            db.commit()
+            c.close()
+        db.close()
