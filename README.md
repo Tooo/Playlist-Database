@@ -12,13 +12,17 @@ pip install -r requirement.txt
 ```
 3. Set up a MySQL database with [mySQL Installer](https://dev.mysql.com/downloads/installer/)
    and [mySQL workbench.](https://dev.mysql.com/downloads/workbench/)
-4. In [sqlsetup.py](https://github.com/Tooo/Playlist-Database/blob/main/sqlsetup.py), 
+4. In [config.py](https://github.com/Tooo/Playlist-Database/blob/main/config.py), 
    fill in your MySQL connection settings.
 ```python
-    host = "localhost"
-    user = "user"
-    password = "password"
-    db = "playlistdatabase"
+DB_HOST = 'localhost'
+DB_USER = 'user'
+DB_PASSWORD = 'password'
+DB_DATABASE = 'playlistdatabase'
+```
+5. Run sqlsetup.py to set up the database and import all the songs.
+```bash
+python3 sqlsetup.py
 ```
 5. Run app.py.
 ```bash
