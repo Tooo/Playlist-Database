@@ -9,6 +9,25 @@
     <h1>Playlist Database</h1>
 </header>
 
+<nav id='navbar'>
+    <form action="http://localhost:5000/home" method="POST">
+        <input type="submit" name="home" value="Home">
+    </form>
+    <form action="http://localhost:5000/playlist" method="POST">
+        <input type="submit" name="playlist" value="Playlist">
+    </form>
+    <form action="http://localhost:5000/songs" method="POST">
+        <input type="submit" name="songs" value="Songs" />
+    </form>
+    <form action="http://localhost:5000/settings" method="POST">
+        <input type="submit" name="settings" value="Settings" />
+    </form>
+    <form action="http://localhost:5000/" method="POST">
+        <input type="submit" name="logout" value="Logout" />
+    </form>
+</nav>
+
+
 <body>
     <form action="http://localhost:5000/settings" method="POST">
         <p><input type="text" name="genre" /></p>
@@ -24,6 +43,8 @@
             </tr>
         {% endfor %}
     </table>
-    <input type="submit" name="delete" value="Delete Account" />
+    <form action="http://localhost:5000/" method="POST">
+        <p><input type="submit" name="delete" value="Delete Account" /></p>
+    </form>
 </body>
 </html>

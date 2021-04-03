@@ -87,7 +87,7 @@ def settings_page():
             else:
                 userManager.insert_user_genre(user, genre)
         genres = userManager.get_user_genre(user)
-        resp = make_response(render_template("home.html", genres=genres))
+        resp = make_response(render_template("settings.html", genres=genres))
         return resp
 
 
