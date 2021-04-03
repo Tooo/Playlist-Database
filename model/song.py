@@ -1,5 +1,7 @@
 import mysql.connector
+
 from sqlsetup import *
+
 
 class Song:
 
@@ -9,10 +11,11 @@ class Song:
         self.genre = genre
         self.artist = artist
         self.duration = duration
-        
-        
+
+
 class SongManager:
-    def database(self):
+    @staticmethod
+    def database():
         db = mysql.connector.connect(
             host=SQLSetup.host,
             user=SQLSetup.user,
@@ -20,7 +23,7 @@ class SongManager:
             database=SQLSetup.db
         )
         return db
-    
+
     def insert_song(self, song):
         db = self.database()
         c = db.cursor()
