@@ -1,12 +1,13 @@
 import mysql.connector
 import pandas as pd
+from config import *
 
 
 class SQLSetup:
-    host = "localhost"
-    user = "user"
-    password = "password"
-    db = "playlistdatabase"
+    host = DB_HOST
+    user = DB_USER
+    password = DB_PASSWORD
+    db = DB_DATABASE
 
     def create_playlist_database(self):
         db = mysql.connector.connect(
@@ -176,7 +177,7 @@ class SQLSetup:
             password=self.password,
             database=self.db
         )
-        df = pd.read_csv('billboard.csv')
+        df = pd.read_csv('data/billboard.csv')
         for col, row in df.iterrows():
             songID = row['SongID']
             genre = row['Genre']
@@ -189,3 +190,9 @@ class SQLSetup:
             db.commit()
             c.close()
         db.close()
+
+
+sqlSetup = SQLSetup()
+sqlSetup.create_playlist_database()
+sqlSetup.create_all_tables()
+sqlSetup.import_songs()
