@@ -68,5 +68,28 @@ def playlist_page():
         return resp
 
 
+@app.route('/songs', methods=['POST', 'GET'])
+def songs_page():
+    if request.method == 'POST':
+        username = request.cookies.get('username')
+
+
+@app.route('/settings', methods=['POST', 'GET'])
+def settings_page():
+    if request.method == 'POST':
+        userManager = UserManager()
+        username = request.cookies.get('username')
+        user = User(username)
+        if 'genreButton' in request.form:
+            genre = request.form['genre']
+            if userManager.is_genre_in_user_genre(user, genre):
+                userManager.delete_user_genre(user, genre)
+            else:
+                userManager.insert_user_genre(user, genre)
+        genres = userManager.get_user_genre(user)
+        resp = make_response(render_template("home.html", genres=genres))
+        return resp
+
+
 if __name__ == '__main__':
     app.run(debug=True)
