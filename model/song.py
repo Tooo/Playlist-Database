@@ -32,3 +32,13 @@ class SongManager:
         db.commit()
         c.close()
         db.close()
+
+    def get_songs(self):
+        db = self.database()
+        c = db.cursor()
+        c.execute("SELECT * FROM Song")
+        songsList = c.fetchall()
+        db.commit()
+        c.close()
+        db.close()
+        return songsList

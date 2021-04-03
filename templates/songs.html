@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Settings - Playlist Database</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename ='styles/main.css') }}">
+</head>
+<header>
+    <h1>Playlist Database</h1>
+</header>
+
+<nav id='navbar'>
+    <form action="http://localhost:5000/home" method="POST">
+        <input type="submit" name="home" value="Home">
+    </form>
+    <form action="http://localhost:5000/playlist" method="POST">
+        <input type="submit" name="playlist" value="Playlist">
+    </form>
+    <form action="http://localhost:5000/songs" method="POST">
+        <input type="submit" name="songs" value="Songs" />
+    </form>
+    <form action="http://localhost:5000/settings" method="POST">
+        <input type="submit" name="settings" value="Settings" />
+    </form>
+    <form action="http://localhost:5000/" method="POST">
+        <input type="submit" name="logout" value="Logout" />
+    </form>
+</nav>
+
+<body>
+    <table class="center">
+        <tr>
+            <th>Title</th>
+            <th>Artist</th>
+            <th>Duration</th>
+            <th>Genre</th>
+        </tr>
+        {% for song in songList %}
+            <tr>
+                <td>{{ song[1] }}</td>
+                <td>{{ song[3] }}</td>
+                <td>{{ song[2] }}</td>
+                <td>{{ song[4] }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+</body>
+
+</html>

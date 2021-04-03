@@ -1,6 +1,7 @@
 from flask import *
 
 from model.playlist import *
+from model.song import *
 from model.user import *
 
 app = Flask(__name__)
@@ -67,8 +68,10 @@ def playlist_page():
 
 @app.route('/songs', methods=['POST', 'GET'])
 def songs_page():
-    if request.method == 'POST':
-        username = request.cookies.get('username')
+    songManager = SongManager()
+    songList = songManager.get_songs()
+    resp = make_response(render_template("songs.html", songList=songList))
+    return resp
 
 
 @app.route('/settings', methods=['POST', 'GET'])
