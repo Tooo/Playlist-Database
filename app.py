@@ -10,7 +10,7 @@ sqlSetup.create_all_tables()
 
 
 @app.route('/', methods=['POST', 'GET'])
-def login():
+def login_page():
     if request.method == 'POST':
         if 'delete' in request.form:
             username = request.cookies.get('username')
@@ -20,7 +20,7 @@ def login():
 
 
 @app.route('/home', methods=['POST', 'GET'])
-def home():
+def home_page():
     if request.method == 'POST':
         userManager = UserManager()
         if 'login' in request.form:
