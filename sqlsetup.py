@@ -1,5 +1,6 @@
 import mysql.connector
-
+import pandas as pd
+from model.song import *
 
 class SQLSetup:
     host = "localhost"
@@ -34,7 +35,6 @@ class SQLSetup:
         self.create_contains_table(db)
         self.create_share_table(db)
         self.create_user_genre_table(db)
-        self.create_song_genre_table(db)
         db.close()
 
     def create_song_table(self, db):
@@ -42,10 +42,12 @@ class SQLSetup:
         c.execute("""CREATE TABLE IF NOT EXISTS Song (
                         songID INTEGER, 
                         name VARCHAR(255), 
-                        duration INTEGER, 
-                        artist VARCHAR(255), 
+                        duration VARCHAR(255), 
+                        artist VARCHAR(255),
+                        genre VARCHAR(255),
                         PRIMARY KEY (songID)
         )""")
+        #self.import_songs()
         c.close()
 
     def create_user_table(self, db):
@@ -167,15 +169,15 @@ class SQLSetup:
                             ON UPDATE CASCADE
         )""")
         c.close()
-
-    def create_song_genre_table(self, db):
-        c = db.cursor()
-        c.execute("""CREATE TABLE IF NOT EXISTS SongGenre (
-                        songID INTEGER, 
-                        genre VARCHAR(255), 
-                        PRIMARY KEY (songID, genre),
-                        FOREIGN KEY (songID) REFERENCES Song (songID)
-                            ON DELETE CASCADE 
-                            ON UPDATE CASCADE
-        )""")
-        c.close()
+        
+    def import_songs(self):
+        songManager=SongManager()
+        df = pd.read_csv('billboard.csv')
+        for col,row in df.iterrows():
+            songID = row['SongID']
+            genre = row['Genre']
+            duration = row['Duration']
+            name = row['Name']
+            artist = row['Artist']
+            song = Song(songID,name,genre,artist,duration)
+            songManager.insert_song(song)
