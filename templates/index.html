@@ -7,8 +7,8 @@
 
 			<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
 			<link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
-			<link rel="stylesheet" href="styles/style.css">
-			<link rel="stylesheet" href="styles/normalize.css">
+			<link rel="stylesheet" href="{{ url_for('static', filename ='styles/style.css') }}">
+			<link rel="stylesheet" href="{{ url_for('static', filename ='styles/normalize.css') }}">
 
 			<title>Playlist Database</title>
 
@@ -20,10 +20,10 @@
 				$("#header").load("header.html");
 			</script>
 
-        <link rel="apple-touch-icon" sizes="180x180"    href="images/apple-touch-icon.png">
-        <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
-        <link rel="manifest" href="/site.webmanifest">
+        <link rel="apple-touch-icon" sizes="180x180"    href="{{ url_for('static', filename ='images/apple-touch-icon.png') }}">
+        <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename ='images/favicon-32x32.png') }}">
+        <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename ='images/favicon-16x16.png') }}">
+        <link rel="manifest" href="{{ url_for('static', filename ='images/site.webmanifest') }}">
 
 			<!-- favicon -->
 		</head>
@@ -52,9 +52,18 @@
 			<section id="tabgroup_main_container" class="tabgroup">
 				<div class="nav nav-pills justify-content-center">
 					<div class="btn-group d-flex" role="group">
-						<a class="btn btn-info w-20" href = "#home"     id = "main_home"     > Home </a>
-						<a class="btn btn-info w-20" href = "#playlist" id = "main_playlist" > Playlist </a>
-						<a class="btn btn-info w-20" href = "#songs"    id = "main_songs"    > Songs </a>
+                        <form action="http://localhost:5000/home#home" method="POST">
+                            <input class="btn btn-info w-20" type="submit" name="home" value="Home">
+{#                            <a class="btn btn-info w-20" href = "#home"     id = "main_home"     > Home </a>#}
+                        </form>
+                        <form action="http://localhost:5000/playlist#playlist" method="POST">
+                            <input class="btn btn-info w-20" type="submit" name="playlist" value="Playlist">
+{#                            <a class="btn btn-info w-20" href = "#playlist" id = "main_playlist" > Playlist </a>#}
+                        </form>
+                        <form action="http://localhost:5000/songs#songs" method="POST">
+                            <input class="btn btn-info w-20" type="submit" name="songs" value="Songs">
+{#                          <a class="btn btn-info w-20" href = "#songs"    id = "main_songs"    > Songs </a>#}
+                        </form>
 						<a class="btn btn-info w-20" href = "#settings" id = "main_settings" > Settings </a>
 						<a class="btn btn-info w-20" href = "#logout"   id = "main_logout"   > Log out </a>
 					</div>
@@ -67,23 +76,23 @@
 			<div class="page" id="home" >
 				<div class = "homewelcome">
 					<div class = "welcome">
-						<h1> Welcome user</h1>
+						<h1>{{message}}</h1>
 					</div>
 
 				</div>
 
 				<div class = "homepic">
 					<div class = "intro image">
-						<img src="images/pld.png" width = 30% height = 30% title="Test"></img>
+						<img src="../static/images/pld.png" width = 30% height = 30% title="Test"></img>
 					</div>
 				</div>
 
 				<div class = "homegenres">
-					<iframe style = "background-color: gray" scrolling = "no" src = "pl1.html" title = "plgenres" width = 50% height = 200px ></iframe>
+					<iframe style = "background-color: gray" scrolling = "no" src = "/homeGenre" title = "plgenres" width = 50% height = 200px ></iframe>
 				</div>
 
 				<div class="homeplaylists">
-					<iframe style = "background-color: gray" src = "pl2.html" title = "pllist" width = 100% height = 300px></iframe>
+					<iframe style = "background-color: gray" src = "/homePlaylist" title = "pllist" width = 100% height = 300px></iframe>
 				</div>
 			</div>
 
