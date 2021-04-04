@@ -30,23 +30,42 @@ def home_page():
                 userManager.insert_user(user)
             else:
                 message = "Hello " + username
-        elif 'genreButton' in request.form:
-            username = request.cookies.get('username')
-            genre = request.form['genre']
-            user = User(username)
-            if userManager.is_genre_in_user_genre(user, genre):
-                userManager.delete_user_genre(user, genre)
-            else:
-                userManager.insert_user_genre(user, genre)
-            message = "Hello " + username
+        # elif 'genreButton' in request.form:
+        #     username = request.cookies.get('username')
+        #     genre = request.form['genre']
+        #     user = User(username)
+        #     if userManager.is_genre_in_user_genre(user, genre):
+        #         userManager.delete_user_genre(user, genre)
+        #     else:
+        #         userManager.insert_user_genre(user, genre)
+        #     message = "Hello " + username
         else:
             username = request.cookies.get('username')
             user = User(username)
             message = "Hello " + username
         genres = userManager.get_user_genre(user)
-        resp = make_response(render_template("home.html", message=message, genres=genres))
+        songManager = SongManager()
+        songList = songManager.get_songs()
+        resp = make_response(render_template("index.html", message=message, genres=genres, songList=songList))
         resp.set_cookie('username', username)
         return resp
+
+
+@app.route('/homeGenre', )
+def home_genre():
+    userManager = UserManager()
+    username = request.cookies.get('username')
+    user = User(username)
+    genres = userManager.get_user_genre(user)
+    return render_template('genre.html', genres=genres)
+
+
+@app.route('/homePlaylist')
+def home_playlist():
+    playlistManager = PlaylistManager()
+    username = request.cookies.get('username')
+    playlists = playlistManager.get_user_playlists(username)
+    return render_template('playlist.html', playlists=playlists)
 
 
 @app.route('/playlist', methods=['POST', 'GET'])
@@ -62,7 +81,7 @@ def playlist_page():
                 playlist = Playlist(playlistName, username, 0)
                 playlistManager.insert_playlist(playlist)
         playlists = playlistManager.get_user_playlists(username)
-        resp = make_response(render_template("playlist.html", playlists=playlists))
+        resp = make_response(render_template("index.html", playlists=playlists))
         return resp
 
 
@@ -70,7 +89,7 @@ def playlist_page():
 def songs_page():
     songManager = SongManager()
     songList = songManager.get_songs()
-    resp = make_response(render_template("songs.html", songList=songList))
+    resp = make_response(render_template("index.html", songList=songList))
     return resp
 
 

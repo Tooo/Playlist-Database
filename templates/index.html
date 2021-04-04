@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+
+	<html lang = "en">
+		<head>
+			<meta charset="utf-8">
+			<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+			<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+			<link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+			<link rel="stylesheet" href="{{ url_for('static', filename ='styles/style.css') }}">
+			<link rel="stylesheet" href="{{ url_for('static', filename ='styles/normalize.css') }}">
+
+			<title>Playlist Database</title>
+
+        <link rel="apple-touch-icon" sizes="180x180"    href="{{ url_for('static', filename ='images/apple-touch-icon.png') }}">
+        <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename ='images/favicon-32x32.png') }}">
+        <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename ='images/favicon-16x16.png') }}">
+        <link rel="manifest" href="{{ url_for('static', filename ='images/site.webmanifest') }}">
+
+			<!-- favicon -->
+		</head>
+
+		<body>
+
+		<nav class="navbar navbar navbar-dark bg-dark">
+			<button id="navbar_main_toggler" class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbar_main_collapse" aria-controls="navbar_main_collapse" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<a class="navbar-brand" tabindex = "-1"><span>Playlist Database</span></a>
+
+			<div tabindex="-1"></div>
+
+			<div id="navbar_main_collapse" class="collapse navbar-collapse">
+				<div class="format-container navbar-nav mr-auto">
+					<select id="select_format">
+						<option disabled>Placeholder</option>
+					</select>
+				</div>
+			</div>
+		</nav>
+
+		<section id="tabs-container" class="tabs">
+
+			<section id="tabgroup_main_container" class="tabgroup">
+				<div class="nav nav-pills justify-content-center">
+					<div class="btn-group d-flex" role="group">
+                        <a class="btn btn-info w-20" href = "#home"     id = "main_home"     > Home </a>
+                        <a class="btn btn-info w-20" href = "#playlist" id = "main_playlist" > Playlist </a>
+                        <a class="btn btn-info w-20" href = "#songs"    id = "main_songs"    > Songs </a>
+						<a class="btn btn-info w-20" href = "#settings" id = "main_settings" > Settings </a>
+						<a class="btn btn-info w-20" href = "#logout"   id = "main_logout"   > Log out </a>
+					</div>
+				</div>
+			</section>
+		</section>
+
+
+			<!--home page code-->
+			<div class="page" id="home" >
+				<div class = "homewelcome">
+					<div class = "welcome">
+						<h1>{{message}}</h1>
+					</div>
+
+				</div>
+
+				<div class = "homepic">
+					<div class = "intro image">
+						<img src="../static/images/pld.png" width = 30% height = 30% title="Test"></img>
+					</div>
+				</div>
+
+				<div class = "homegenres">
+					<iframe style = "background-color: gray" scrolling = "no" src = "/homeGenre" title = "plgenres" width = 50% height = 200px ></iframe>
+				</div>
+
+				<div class="homeplaylists">
+					<iframe style = "background-color: gray" src = "/homePlaylist" title = "pllist" width = 100% height = 300px></iframe>
+				</div>
+			</div>
+
+			<!--playlist page code-->
+			<div class="page" id="playlist">
+
+				<div role="group">
+					<a class="btn btn-outline-primary" href = "#createplaylist" id = "main_create" style="float:right; margin-right: 10%">Create Playlist</a>
+				</div>
+
+				<br><br>
+
+				<h2>Your playlists</h2>
+					<body>
+					    <table class="playlistT" style="background-color:white">
+					     	<tr style = "background-color: gray">
+					            <th>Playlist</th>
+					            <th>Genre</th>
+					        </tr>
+					        {% for playlist in playlists %}
+					            <tr>
+					                <td>{{ playlist[0] }}</td> <!--playlist number-->
+					                <td>{{ playlist[1] }}</td> <!--genre-->
+					            </tr>
+					        {% endfor %}
+					    </table>
+					</body>
+			</div>
+
+			<div class="page" id="createplaylist">
+
+				<form>
+					<input type ="submit" value="Share" style="float:right; margin-right:10%">
+					<input type = "text" id = "password" placeholder = "password" style="float:right; margin-right:1%">
+				</form>
+
+				<br>
+
+				<body>
+				    <table class="songslist" style="background-color:white">
+				        <tr style = "background-color: gray">
+				            <th>Title</th>
+				            <th>Artist</th>
+				            <th>Duration</th>
+				            <th>Genre</th>
+				        </tr>
+				        {% for song in songList %}
+				            <tr>
+				                <td>{{ song[1] }}</td>
+				                <td>{{ song[3] }}</td>
+				                <td>{{ song[2] }}</td>
+				                <td>{{ song[4] }}</td>
+				            </tr>
+				        {% endfor %}
+				    </table>
+				</body>
+				
+				<br>
+
+				<div class="input-group">
+				    <input type="text" class="formsearch" placeholder="search">
+				    <div class="input-group-append">
+				      <button class="btn btn-secondary" type="button">
+				      	<h7>Go</h7>
+				        <!--may or may not add glyphicons later-->
+				      </button>
+				    </div>
+				</div>
+
+				<body>
+				    <table class="songslist" style="background-color:white">
+				        <tr style = "background-color: gray">
+				            <th>Title</th>
+				            <th>Artist</th>
+				            <th>Duration</th>
+				            <th>Genre</th>
+				        </tr>
+				        {% for song in songList %}
+				            <tr>
+				                <td>{{ song[1] }}</td>
+				                <td>{{ song[3] }}</td>
+				                <td>{{ song[2] }}</td>
+				                <td>{{ song[4] }}</td>
+				                <!--<td><button class = "btn btn-secondary" type="button" style="position: absolute;"></button></td> - will reformat later-->
+				            </tr>
+				        {% endfor %}
+				    </table>
+				</body>
+
+			</div>
+
+			<!--song page code-->
+			<div class="page" id="songs">
+
+				<body>
+				    <table class="songslist" style="background-color:white">
+				        <tr style = "background-color: gray">
+				            <th>Title</th>
+				            <th>Artist</th>
+				            <th>Duration</th>
+				            <th>Genre</th>
+				        </tr>
+				        {% for song in songList %}
+				            <tr>
+				                <td>{{ song[1] }}</td>
+				                <td>{{ song[3] }}</td>
+				                <td>{{ song[2] }}</td>
+				                <td>{{ song[4] }}</td>
+				            </tr>
+				        {% endfor %}
+				    </table>
+				</body>
+
+
+			</div>
+
+			<!--settings page code-->
+			<div class="page" id="settings">
+				<div class ="faq-p">
+					<h2>Temp</h2>
+				</div>
+			</div>
+
+			<!--logout page code-->
+			<div class="page" id="logout">
+					<h2>Temp</h2>
+			</div>
+
+			<br><br>
+
+			</body>
+
+	</html>
