@@ -1,0 +1,218 @@
+*{
+  box-sizing: border-box
+}
+
+body {
+    text-align: center;
+    vertical-align: middle;
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    background-color: #23231F
+}
+
+nav {
+    flex-wrap: wrap;
+    float: top;
+    /*visibility: hidden;*/
+    z-index: 6;
+}
+
+.sides {
+  margin: 20px;
+/*  top: 0;
+  overflow-x: hidden;
+  padding-top: 20px*/
+}
+
+.homewelcome {
+  margin: 20px;
+  position: fixed;
+  z-index: 1;
+  width: 30%;
+  left: 0;
+  background-color: #462;
+
+}
+
+.homepic {
+  margin: 20px;
+  position: fixed;
+  z-index: 1;
+  width: 50%;
+  right: 0;
+  margin-left: 20px;
+  width: 40%;
+  height: 15%;
+}
+
+.homegenres{
+    position: fixed;
+    margin: 20px;
+    padding-top: 100px;
+    width: 30%;
+    z-index: 1;
+    left:0
+}
+
+.homeplaylists{
+  position: fixed;
+  padding-top: 200px;
+  margin:20px;
+  width: 40%;
+  z-index: 1;
+  margin-right: 20px;
+  right:0;
+}
+
+.tooltip {
+	top: -5px;
+  	left: 105%;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px;
+  
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 6;
+  top: -5px;
+  left: 105%;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+
+
+#main_home{
+    padding-left: 32px;
+    padding-right: 32px;
+    z-index: 5;
+}
+
+#main_playlist{
+    padding-left: 32px;
+    padding-right: 32px;
+    z-index: 5;
+}
+
+#main_songs{
+    padding-left: 32px;
+    padding-right: 32px;
+    z-index: 5;
+}
+
+#main_settings{
+    padding-left: 32px;
+    padding-right: 32px;
+    z-index: 5;
+}
+
+#main_logout{
+    padding-left: 32px;
+    padding-right: 32px;
+    z-index: 5;
+}
+
+.playlist{
+    
+}
+
+.home{
+
+}
+
+.songs{
+    
+}
+
+.settings{
+
+}
+.logout{
+
+}
+
+h1 {
+	font-family : "Palatino";
+	font-weight: bold;
+	font-size: 40px;
+	color: black;
+	text-align: center;
+	margin: 20px;
+}
+
+h2{
+    font-family : "Helvetica Neue";
+    font-weight: bold;
+    font-size: 20px;
+    color: white;
+    text-align: center;
+    margin: 20px;
+    overflow: auto;
+}
+
+p {
+	font-family : "Helvetica Neue";
+	font-size: 15px;
+    color: white;
+}
+
+ptext{
+    font-family : "Palatino";
+    font-size: 15px;
+    color: white;
+}
+
+.page {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: -100vw;
+    padding-top: 100px;
+    overflow-y: auto;
+    z-index: 0;
+    background-color: #23231F;
+}
+
+.page:target {
+    left: 0;
+    z-index: 1;
+}
+
+.page img{
+
+}
+
+
+table{
+    font-family: "Palatino", serif;
+    table-layout: fixed;
+    border-collapse: collapse;
+    width: 90%;
+    padding-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+th{
+    border: 1px solid white;
+    text-align: center;
+    padding: 8px;
+    height: 50px;
+    width: 10%;
+}
+
+td{
+    border: 1px solid white;
+    text-align: center;
+    padding: 8px;
+    height: 250px;
+    width: 10%;
+}
