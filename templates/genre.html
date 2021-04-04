@@ -1,13 +1,11 @@
 <body>
     <table class="center" style="background-color:white">
      	<tr style = "background-color: gray">
-            <th>Playlist</th>
-            <th>Genre</th>
+            <th>Genres:</th>
         </tr>
         {% for playlist in playlists %}
             <tr>
-                <td>{{ playlist[1] }}</td> <!--playlist number-->
-                <td>{{ playlist[2] }}</td> <!--genre-->
+                <td>{{ playlist[2] }}</td> <!--lists genres-->
             </tr>
         {% endfor %}
     </table>

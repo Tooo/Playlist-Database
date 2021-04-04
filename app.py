@@ -57,7 +57,7 @@ def home_genre():
     username = request.cookies.get('username')
     user = User(username)
     genres = userManager.get_user_genre(user)
-    return render_template('pl1.html', genres=genres)
+    return render_template('genre.html', genres=genres)
 
 
 @app.route('/homePlaylist')
@@ -65,7 +65,7 @@ def home_playlist():
     playlistManager = PlaylistManager()
     username = request.cookies.get('username')
     playlists = playlistManager.get_user_playlists(username)
-    return render_template('pl2.html', playlists=playlists)
+    return render_template('playlist.html', playlists=playlists)
 
 
 @app.route('/playlist', methods=['POST', 'GET'])
