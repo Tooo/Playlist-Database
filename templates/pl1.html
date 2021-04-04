@@ -1,1 +1,12 @@
-<p>Genres: </p>
+<body>
+    <table class="center" style="background-color:white">
+     	<tr style = "background-color: gray">
+            <th>Genres:</th>
+        </tr>
+        {% for playlist in playlists %}
+            <tr>
+                <td>{{ playlist[2] }}</td> <!--lists genres-->
+            </tr>
+        {% endfor %}
+    </table>
+</body>

@@ -6,6 +6,7 @@
 			<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 			<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+			<link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
 			<link rel="stylesheet" href="styles/style.css">
 			<link rel="stylesheet" href="styles/normalize.css">
 
@@ -34,8 +35,6 @@
 				<span class="navbar-toggler-icon"></span>
 			</button>
 			<a class="navbar-brand" tabindex = "-1"><span>Playlist Database</span></a>
-
-			<!-- href = "./"  would point you to a homepage-->
 
 			<div tabindex="-1"></div>
 
@@ -91,13 +90,113 @@
 			<!--playlist page code-->
 			<div class="page" id="playlist">
 
+				<div role="group">
+					<a class="btn btn-outline-primary" href = "#createplaylist" id = "main_create" style="float:right; margin-right: 10%">Create Playlist</a>
+				</div>
+
+				<br><br>
+
+				<h2>Your playlists</h2>
+					<body>
+					    <table class="playlistT" style="background-color:white">
+					     	<tr style = "background-color: gray">
+					            <th>Playlist</th>
+					            <th>Genre</th>
+					        </tr>
+					        {% for playlist in playlists %}
+					            <tr>
+					                <td>{{ playlist[1] }}</td> <!--playlist number-->
+					                <td>{{ playlist[2] }}</td> <!--genre-->
+					            </tr>
+					        {% endfor %}
+					    </table>
+					</body>
+			</div>
+
+			<div class="page" id="createplaylist">
+
+				<form>
+					<input type ="submit" value="Share" style="float:right; margin-right:10%">
+					<input type = "text" id = "password" placeholder = "password" style="float:right; margin-right:1%">
+				</form>
+
+				<br>
+
+				<body>
+				    <table class="songslist" style="background-color:white">
+				        <tr style = "background-color: gray">
+				            <th>Title</th>
+				            <th>Artist</th>
+				            <th>Duration</th>
+				            <th>Genre</th>
+				        </tr>
+				        {% for song in songList %}
+				            <tr>
+				                <td>{{ song[1] }}</td>
+				                <td>{{ song[3] }}</td>
+				                <td>{{ song[2] }}</td>
+				                <td>{{ song[4] }}</td>
+				            </tr>
+				        {% endfor %}
+				    </table>
+				</body>
+				
+				<br>
+
+				<div class="input-group">
+				    <input type="text" class="formsearch" placeholder="search">
+				    <div class="input-group-append">
+				      <button class="btn btn-secondary" type="button">
+				      	<h7>Go</h7>
+				        <!--may or may not add glyphicons later-->
+				      </button>
+				    </div>
+				</div>
+
+				<body>
+				    <table class="songslist" style="background-color:white">
+				        <tr style = "background-color: gray">
+				            <th>Title</th>
+				            <th>Artist</th>
+				            <th>Duration</th>
+				            <th>Genre</th>
+				        </tr>
+				        {% for song in songList %}
+				            <tr>
+				                <td>{{ song[1] }}</td>
+				                <td>{{ song[3] }}</td>
+				                <td>{{ song[2] }}</td>
+				                <td>{{ song[4] }}</td>
+				                <!--<td><button class = "btn btn-secondary" type="button" style="position: absolute;"></button></td> - will reformat later-->
+				            </tr>
+				        {% endfor %}
+				    </table>
+				</body>
 
 			</div>
 
 			<!--song page code-->
 			<div class="page" id="songs">
 
-				<iframe src = "songs.html" title="testing" id = songstable width = 80% height = 300px></iframe>
+				<body>
+				    <table class="songslist" style="background-color:white">
+				        <tr style = "background-color: gray">
+				            <th>Title</th>
+				            <th>Artist</th>
+				            <th>Duration</th>
+				            <th>Genre</th>
+				        </tr>
+				        {% for song in songList %}
+				            <tr>
+				                <td>{{ song[1] }}</td>
+				                <td>{{ song[3] }}</td>
+				                <td>{{ song[2] }}</td>
+				                <td>{{ song[4] }}</td>
+				            </tr>
+				        {% endfor %}
+				    </table>
+				</body>
+
 
 			</div>
 
