@@ -80,3 +80,14 @@ class SongManager:
         db.commit()
         c.close()
         db.close()
+
+    def get_all_user_song_ratings(self, username):
+        db = self.database()
+        c = db.cursor()
+        sql = "SELECT * FROM Rate WHERE username = %s"
+        c.execute(sql, (username,))
+        ratingList = c.fetchall()
+        db.commit()
+        c.close()
+        db.close()
+        return ratingList
