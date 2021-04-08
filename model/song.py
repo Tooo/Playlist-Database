@@ -38,10 +38,31 @@ class SongManager:
         c = db.cursor()
         c.execute("SELECT * FROM Song")
         songsList = c.fetchall()
-        db.commit()
         c.close()
         db.close()
         return songsList
+
+    def search_all_songs(self, search):
+        db = self.database()
+        c = db.cursor()
+        sql = "SELECT * FROM SONG WHERE name LIKE '%' + %s + '%' " \
+              "UNION " \
+              "SELECT * FROM SONG WHERE artist LIKE '%' + %s + '%'"
+        c.execute(sql, (search, search))
+        songList = c.fetchall()
+        c.close()
+        db.close()
+        return songList
+
+    def search_all_songs_genres(self, search):
+        db = self.database()
+        c = db.cursor()
+        sql = "SELECT * FROM SONG WHERE genre LIKE '%' + %s + '%'"
+        c.execute(sql, (search, ))
+        songList = c.fetchall()
+        c.close()
+        db.close()
+        return songList
 
     def insert_song_rating(self, songID, username, rating):
         db = self.database()
