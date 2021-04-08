@@ -42,3 +42,41 @@ class SongManager:
         c.close()
         db.close()
         return songsList
+
+    def insert_song_rating(self, songID, username, rating):
+        db = self.database()
+        c = db.cursor()
+        sql = "INSERT INTO Rate (username, songID, Rating) VALUES (%s, %s, %s)"
+        c.execute(sql, (username, songID, rating))
+        db.commit()
+        c.close()
+        db.close()
+
+    def get_song_rating(self, songID, username):
+        db = self.database()
+        c = db.cursor()
+        sql = "SELECT * FROM Rate WHERE songID = %s AND username = %s"
+        c.execute(sql, (songID, username))
+        rating = c.fetchone()
+        db.commit()
+        c.close()
+        db.close()
+        return rating
+
+    def update_song_rating(self, songID, username, rating):
+        db = self.database()
+        c = db.cursor()
+        sql = "UPDATE Rate SET rating = %s WHERE songID = %s AND username = %s"
+        c.execute(sql, (rating, songID, username))
+        db.commit()
+        c.close()
+        db.close()
+
+    def delete_song_rating(self, songID, username):
+        db = self.database()
+        c = db.cursor()
+        sql = "DELETE FROM Rate WHERE songID = %s AND username = %s"
+        c.execute(sql, (songID, username))
+        db.commit()
+        c.close()
+        db.close()
