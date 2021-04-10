@@ -162,6 +162,6 @@ class PlaylistManager:
         c.close()
         db.close()
         if playlist is None:
-            return False
-        else:
             return True
+        else:
+            return False
