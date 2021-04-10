@@ -36,6 +36,8 @@ class PlaylistManager:
         c = db.cursor()
         sql = "INSERT INTO Playlist (name,username,date) VALUES (%s,%s,playlist.date)"
         c.execute(sql, (playlist.name, playlist.username))
+        sql = "INSERT INTO Public (name,username) VALUES (%s,%s)"
+        c.execute(sql, (playlist.name, playlist.username))
         db.commit()
         c.close()
         db.close()
@@ -115,3 +117,51 @@ class PlaylistManager:
         db.commit()
         c.close()
         db.close()
+
+    def make_private(self, name, username, password):
+        db = self.database()
+        c = db.cursor()
+        sql = "DELETE FROM Public WHERE name = %s AND username = %s"
+        c.execute(sql, (name, username))
+        sql = "INSERT INTO Private (name,username,password) VALUES (%s,%s,%s)"
+        c.execute(sql, (name, username,password))
+        db.commit()
+        c.close()
+        db.close()
+
+    def make_public(self, name, username):
+        db = self.database()
+        c = db.cursor()
+        sql = "DELETE FROM Private WHERE name = %s AND username = %s"
+        c.execute(sql, (name, username))
+        sql = "INSERT INTO Public (name,username) VALUES (%s,%s)"
+        c.execute(sql, (name, username))
+        db.commit()
+        c.close()
+        db.close()
+
+    def password_check(self, name,username,password):
+        db = self.database()
+        c = db.cursor()
+        sql = "SELECT password FROM Private WHERE name = %s AND username = %s AND password =%s"
+        c.execute(sql, (name, username,password))
+        playlist = c.fetchone()
+        c.close()
+        db.close()
+        if playlist is None:
+            return False
+        else:
+            return True
+
+    def private_check(self, name,username):
+        db = self.database()
+        c = db.cursor()
+        sql = "SELECT playlist FROM Public WHERE name = %s AND username = %s"
+        c.execute(sql, (name, username))
+        playlist = c.fetchone()
+        c.close()
+        db.close()
+        if playlist is None:
+            return False
+        else:
+            return True
