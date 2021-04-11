@@ -41,6 +41,18 @@ class PlaylistManager:
         db.commit()
         c.close()
         db.close()
+    
+    def insert_playlist_with_name(self, name, username):
+        db = self.database()
+        c = db.cursor()
+        sql = "INSERT INTO Playlist (name,username) VALUES (%s,%s)"
+        c.execute(sql, (name, username))
+        sql = "INSERT INTO Public (name,username) VALUES (%s,%s)"
+        c.execute(sql, (name, username))
+        db.commit()
+        c.close()
+        db.close()
+
 
     def get_playlist(self, name, username):
         db = self.database()
@@ -153,10 +165,10 @@ class PlaylistManager:
         else:
             return True
 
-    def private_check(self, name,username):
+    def is_private(self, name,username):
         db = self.database()
         c = db.cursor()
-        sql = "SELECT playlist FROM Public WHERE name = %s AND username = %s"
+        sql = "SELECT name FROM Public WHERE name = %s AND username = %s"
         c.execute(sql, (name, username))
         playlist = c.fetchone()
         c.close()
@@ -165,3 +177,13 @@ class PlaylistManager:
             return True
         else:
             return False
+        
+    def join_playlist(self, name, username, name2, username2, name3, username3):
+        db = self.database()
+        c = db.cursor()
+        sql = "SELECT songID FROM Contains WHERE name = %S AND username =%s UNION SELECT songID FROM Contains WHERE name = %s AND username = %s"
+        c.execute(sql, (name, username,name2,username2))
+        new_playlist = c.fetchall()
+        insert_playlist_with_name(name3,username3)
+        for song in new_playlist:
+            insert_song_in_playlist(name3, username3,song)
