@@ -187,3 +187,22 @@ class PlaylistManager:
         insert_playlist_with_name(name3,username3)
         for song in new_playlist:
             insert_song_in_playlist(name3, username3,song)
+            
+            
+    def shared_playlist(name, username, username2):
+        db = self.database()
+        c = db.cursor()
+        sql = "INSERT INTO share (name,username,date) VALUES (%s,%s,%s)"
+        c.execute(sql, (name, username, username2))
+        playlist = c.fetchone()
+        c.close()
+        db.close()
+        
+    def rate_playlist(rating, comment, name, username, username2):
+        db = self.database()
+        c = db.cursor()
+        sql = "UPDATE share SET rating = %d comment = %s WHERE name = %s AND username = %s AND superUsername = %s"
+        c.execute(sql, (rating, comment, name, username, username2))
+        playlist = c.fetchone()
+        c.close()
+        db.close()
