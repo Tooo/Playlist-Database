@@ -1,3 +1,9 @@
+.dataTables_length,
+.dataTables_filter,
+.dataTables_info {
+color: white !important;
+}
+
 *{
   box-sizing: border-box
 }
@@ -76,7 +82,7 @@ nav {
   text-align: center;
   border-radius: 6px;
   padding: 5px;
-  
+
   /* Position the tooltip */
   position: absolute;
   z-index: 6;
@@ -126,7 +132,7 @@ nav {
 }
 
 .playlist{
-    
+
 }
 
 .home{
@@ -134,7 +140,7 @@ nav {
 }
 
 .songs{
-    
+
 }
 
 .settings{
@@ -175,12 +181,6 @@ p text{
     color: white;
 }
 
-.formsearch{
-  width: 60%;
-  margin-left: 20%;
-  padding-left: 1%;
-}
-
 .page {
     width: 100vw;
     height: 100vh;
@@ -200,47 +200,6 @@ p text{
 
 .page img{
 
-}
-
-.songslist{
-  width: 80%;
-}
-
-.songslist th{
-    border: 1px solid white;
-    text-align: center;
-    padding: 8px;
-    height: 80px;
-    width: 10%;
-}
-
-.songslist td{
-    border: 1px solid white;
-    text-align: center;
-    height: 30px;
-    width: 10%;
-}
-
-.playlistT{
-    width: 50%;
-}
-
-.playlistT th{
-
-}
-
-.playlistT td{
-
-}
-
-table{
-    font-family: "Helvetica Neue", Arial, sans-serif;
-    table-layout: fixed;
-    border-collapse: collapse;
-    width: 90%;
-    padding-top: 20px;
-    margin-left: auto;
-    margin-right: auto;
 }
 
 th{
