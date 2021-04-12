@@ -78,11 +78,43 @@
 				</div>
 
 				<div class = "homegenres">
-					<iframe style = "background-color: gray" scrolling = "no" src = "/homeGenre" title = "plgenres" width = 50% height = 200px ></iframe>
+                    <div class="container mb-3 mt-3">
+                        <table class="table table-striped" width="100%">
+                            <thead>
+                                <tr style = "background-color: gray">
+                                    <th>Genres</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% for playlist in playlists %}
+                                <tr>
+                                    <td>{{ playlist[1] }}</td> <!--genre-->
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
 				</div>
 
 				<div class="homeplaylists">
-					<iframe style = "background-color: gray" src = "/homePlaylist" title = "pllist" width = 100% height = 300px></iframe>
+                    <div class="container mb-3 mt-3">
+                        <table class="table table-striped" width="100%">
+                            <thead>
+                                <tr style = "background-color: gray">
+                                    <th>Playlist</th>
+                                    <th>Genre</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% for playlist in playlists %}
+                                <tr>
+                                    <td>{{ playlist[0] }}</td> <!--playlist number-->
+                                    <td>{{ playlist[1] }}</td> <!--genre-->
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
 				</div>
 			</div>
 
