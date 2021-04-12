@@ -3,9 +3,9 @@
      	<tr style = "background-color: gray">
             <th>Genres:</th>
         </tr>
-        {% for playlist in playlists %}
+        {% for genre in genres %}
             <tr>
-                <td>{{ playlist[2] }}</td> <!--lists genres-->
+                <td>{{ genre[1] }}</td> <!--lists genres-->
             </tr>
         {% endfor %}
     </table>

@@ -86,9 +86,9 @@
                                 </tr>
                             </thead>
                             <tbody>
-                            {% for playlist in playlists %}
-                                <tr>
-                                    <td>{{ playlist[1] }}</td> <!--genre-->
+                            {% for genre in genres %}
+                                <tr style = "background-color: white">
+                                    <td>{{ genre[0] }}</td> <!--genre-->
                                 </tr>
                             {% endfor %}
                             </tbody>
@@ -107,7 +107,7 @@
                             </thead>
                             <tbody>
                             {% for playlist in playlists %}
-                                <tr>
+                                <tr style = "background-color: white">
                                     <td>{{ playlist[0] }}</td> <!--playlist number-->
                                     <td>{{ playlist[1] }}</td> <!--genre-->
                                 </tr>
@@ -138,7 +138,7 @@
                             </thead>
                             <tbody>
                             {% for playlist in playlists %}
-                                <tr>
+                                <tr style = "background-color: white">
                                     <td>{{ playlist[0] }}</td> <!--playlist number-->
                                     <td>{{ playlist[1] }}</td> <!--genre-->
                                 </tr>
@@ -201,7 +201,7 @@
                                             <td>{{ song[3] }}</td>
                                             <td>{{ song[2] }}</td>
                                             <td>{{ song[4] }}</td>
-                                            <td><button class = "btn btn-secondary" type="button" style="position: absolute;">add</button></td>
+                                            <td><button class = "btn btn-secondary" type="button" style="position: absolute;">+</button></td>
                                         </tr>
                                     {% endfor %}
                                 </tbody>
