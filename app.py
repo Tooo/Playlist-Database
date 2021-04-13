@@ -1,10 +1,12 @@
 from flask import *
+from time import *
 
 from model.playlist import *
 from model.song import *
 from model.user import *
 
 app = Flask(__name__)
+
 
 @app.route('/', methods=['POST', 'GET'])
 def login_page():
@@ -35,6 +37,17 @@ def home_page():
     resp = make_response(render_template("index.html", message=message, genres=genres, songList=songList, playlists=playlists))
     resp.set_cookie('username', username)
     return resp
+
+
+@app.route('/createPlaylist', methods=['POST'])
+def create_playlist_button():
+    username = request.cookies.get('username')
+    name = request.form['plName']
+    # password = request.form['plPassword']
+    playlistManager = PlaylistManager()
+    if not playlistManager.is_playlist_in_user(name, username):
+        playlistManager.insert_playlist(Playlist(name, username, time()))
+    return redirect('/home#playlist')
 
 
 @app.route('/genreButton', methods=['POST'])

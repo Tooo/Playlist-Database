@@ -169,14 +169,14 @@
 					<input id = plPassword type ="text" id = "password" placeholder = "password" disabled style="float:right; margin-right:1%">
 				</form>-->
 
-            <form class = "form-inline">
+            <form class = "form-inline" action="http://localhost:5000/createPlaylist" method="POST">
               <div class="form-group ml-3 pr-3">
-                <label>Name your playlist: </label>
-                <input type="plName" class="form-control" id="name" aria-describedby="emailHelp" placeholder="My Pop Playlist">
+                <label>Playlist Name: </label>
+                <input name="plName" type="text" class="form-control" id="name" aria-describedby="emailHelp" placeholder="My Pop Playlist">
               </div>
               <div class="form-group form-inline pr-3">
                 <label>Password: </label>
-                <input id = plPassword type ="text" class="form-control" placeholder="Password">
+                <input id=plPassword type="text" class="form-control" placeholder="Password">
               </div>
                 <div class ="text-right">
                   <button type="submit" class="btn btn-success">Submit</button>
