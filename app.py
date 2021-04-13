@@ -43,7 +43,8 @@ def home_page():
 def create_playlist_button():
     username = request.cookies.get('username')
     name = request.form['plName']
-    # password = request.form['plPassword']
+    if request.form['visibility'] == "private":
+        password = request.form['plPassword']
     playlistManager = PlaylistManager()
     if not playlistManager.is_playlist_in_user(name, username):
         playlistManager.insert_playlist(Playlist(name, username, time()))

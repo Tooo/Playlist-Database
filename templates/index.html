@@ -152,17 +152,7 @@
 			</div>
 
 			<div class="page" id="createplaylist">
-                <br>
-                <div class="form-check-inline">
-                  <label class="form-check-label">
-                    <input id=plPublic type="radio" class="form-check-input" name="optradio">Public
-                  </label>
-                </div>
-                <div class="form-check-inline">
-                  <label class="form-check-label">
-                    <input id=plPrivate type="radio" class="form-check-input" name="optradio">Private
-                  </label>
-                </div>
+
 
 				<!--<form>
 					<input type ="submit" value="Share" style="float:right; margin-right:10%">
@@ -170,13 +160,25 @@
 				</form>-->
 
             <form class = "form-inline" action="http://localhost:5000/createPlaylist" method="POST">
+                <br>
+                <div class="form-check-inline">
+                  <label class="form-check-label">
+                    <input id=plPublic name="visibility" type="radio" class="form-check-input" name="optradio" value="public" >Public
+                  </label>
+                </div>
+                <div class="form-check-inline">
+                  <label class="form-check-label">
+                    <input id=plPrivate name="visibility" type="radio" class="form-check-input" name="optradio" value="private" checked>Private
+                  </label>
+                </div>
+                <br>
               <div class="form-group ml-3 pr-3">
                 <label>Playlist Name: </label>
-                <input name="plName" type="text" class="form-control" id="name" aria-describedby="emailHelp" placeholder="My Pop Playlist">
+                <input name="plName" type="text" class="form-control" id="name" aria-describedby="emailHelp" placeholder="My Pop Playlist" required>
               </div>
               <div class="form-group form-inline pr-3">
                 <label>Password: </label>
-                <input id=plPassword type="text" class="form-control" placeholder="Password">
+                <input id=plPassword name="plPassword" type="text" class="form-control" placeholder="Password">
               </div>
                 <div class ="text-right">
                   <button type="submit" class="btn btn-success">Submit</button>
