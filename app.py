@@ -30,15 +30,15 @@ def home_page():
                 userManager.insert_user(user)
             else:
                 message = "Hello " + username
-        # elif 'genreButton' in request.form:
-        #     username = request.cookies.get('username')
-        #     genre = request.form['genre']
-        #     user = User(username)
-        #     if userManager.is_genre_in_user_genre(user, genre):
-        #         userManager.delete_user_genre(user, genre)
-        #     else:
-        #         userManager.insert_user_genre(user, genre)
-        #     message = "Hello " + username
+        elif 'genreButton' in request.form:
+            username = request.cookies.get('username')
+            genre = request.form['genre']
+            user = User(username)
+            if userManager.is_genre_in_user_genre(user, genre):
+                userManager.delete_user_genre(user, genre)
+            else:
+                userManager.insert_user_genre(user, genre)
+            message = "Hello " + username
         else:
             username = request.cookies.get('username')
             user = User(username)
