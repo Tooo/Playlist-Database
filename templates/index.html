@@ -55,7 +55,7 @@
                         <a class="btn btn-info w-20" href = "#playlist" id = "main_playlist" > Playlist </a>
                         <a class="btn btn-info w-20" href = "#songs"    id = "main_songs"    > Songs </a>
 						<a class="btn btn-info w-20" href = "#settings" id = "main_settings" > Settings </a>
-						<a class="btn btn-info w-20" href = "#logout"   id = "main_logout"   > Log out </a>
+						<a class="btn btn-info w-20" href = "/"   id = "main_logout"   > Log out </a>
 					</div>
 				</div>
 			</section>
@@ -78,11 +78,43 @@
 				</div>
 
 				<div class = "homegenres">
-					<iframe style = "background-color: gray" scrolling = "no" src = "/homeGenre" title = "plgenres" width = 50% height = 200px ></iframe>
+                    <div class="container mb-3 mt-3">
+                        <table class="table table-striped" width="100%">
+                            <thead>
+                                <tr style = "background-color: gray">
+                                    <th>Genres</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% for genre in genres %}
+                                <tr style = "background-color: white">
+                                    <td>{{ genre[0] }}</td> <!--genre-->
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
 				</div>
 
 				<div class="homeplaylists">
-					<iframe style = "background-color: gray" src = "/homePlaylist" title = "pllist" width = 100% height = 300px></iframe>
+                    <div class="container mb-3 mt-3">
+                        <table class="table table-striped" width="100%">
+                            <thead>
+                                <tr style = "background-color: gray">
+                                    <th>Playlist</th>
+                                    <th>Genre</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% for playlist in playlists %}
+                                <tr style = "background-color: white">
+                                    <td>{{ playlist[0] }}</td> <!--playlist number-->
+                                    <td>{{ playlist[1] }}</td> <!--genre-->
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
 				</div>
 			</div>
 
@@ -106,7 +138,7 @@
                             </thead>
                             <tbody>
                             {% for playlist in playlists %}
-                                <tr>
+                                <tr style = "background-color: white">
                                     <td>{{ playlist[0] }}</td> <!--playlist number-->
                                     <td>{{ playlist[1] }}</td> <!--genre-->
                                 </tr>
@@ -169,7 +201,7 @@
                                             <td>{{ song[3] }}</td>
                                             <td>{{ song[2] }}</td>
                                             <td>{{ song[4] }}</td>
-                                            <td><button class = "btn btn-secondary" type="button" style="position: absolute;">add</button></td>
+                                            <td><button class = "btn btn-secondary" type="button" style="position: absolute;">+</button></td>
                                         </tr>
                                     {% endfor %}
                                 </tbody>
@@ -216,13 +248,17 @@
 			<div class="page" id="settings">
 				<div class ="faq-p">
 					<h2>Temp</h2>
+                        <form action="http://localhost:5000/genreButton" method="POST">
+                            <p><input type="text" name="genre" /></p>
+                            <p><input type="submit" name="genreButton" value="Add/Remove Genre" /></p>
+                        </form>
+                        <form action="http://localhost:5000/deleteUser" method="POST">
+                             <p><input type="submit" name="delete" value="Delete Account" /></p>
+                        </form>
 				</div>
 			</div>
 
 			<!--logout page code-->
-			<div class="page" id="logout">
-					<h2>Temp</h2>
-			</div>
 
 			<br><br>
 
