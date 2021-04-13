@@ -9,11 +9,6 @@ app = Flask(__name__)
 
 @app.route('/', methods=['POST', 'GET'])
 def login_page():
-    if request.method == 'POST':
-        if 'delete' in request.form:
-            username = request.cookies.get('username')
-            userManager = UserManager()
-            userManager.delete_user(username)
     return render_template('login.html')
 
 
@@ -54,6 +49,14 @@ def genre_button():
     else:
         userManager.insert_user_genre(user, genre)
     return redirect('/home#settings')
+
+
+@app.route('/deleteUser', methods=['POST'])
+def delete_user_button():
+    username = request.cookies.get('username')
+    userManager = UserManager()
+    userManager.delete_user(username)
+    return redirect('/')
 
 
 @app.route('/homeGenre', )
