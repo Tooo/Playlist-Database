@@ -6,7 +6,6 @@ from model.user import *
 
 app = Flask(__name__)
 
-
 @app.route('/', methods=['POST', 'GET'])
 def login_page():
     if request.method == 'POST':
