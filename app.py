@@ -9,46 +9,54 @@ app = Flask(__name__)
 
 @app.route('/', methods=['POST', 'GET'])
 def login_page():
-    if request.method == 'POST':
-        if 'delete' in request.form:
-            username = request.cookies.get('username')
-            userManager = UserManager()
-            userManager.delete_user(username)
     return render_template('login.html')
 
 
 @app.route('/home', methods=['POST', 'GET'])
 def home_page():
-    if request.method == 'POST':
-        userManager = UserManager()
-        if 'login' in request.form:
-            username = request.form['username']
-            user = userManager.get_user(username)
-            if user is None:
-                user = User(username)
-                message = username + " has been created"
-                userManager.insert_user(user)
-            else:
-                message = "Hello " + username
-        # elif 'genreButton' in request.form:
-        #     username = request.cookies.get('username')
-        #     genre = request.form['genre']
-        #     user = User(username)
-        #     if userManager.is_genre_in_user_genre(user, genre):
-        #         userManager.delete_user_genre(user, genre)
-        #     else:
-        #         userManager.insert_user_genre(user, genre)
-        #     message = "Hello " + username
-        else:
-            username = request.cookies.get('username')
+    userManager = UserManager()
+    if 'login' in request.form:
+        username = request.form['username']
+        user = userManager.get_user(username)
+        if user is None:
             user = User(username)
+            message = username + " has been created"
+            userManager.insert_user(user)
+        else:
             message = "Hello " + username
-        genres = userManager.get_user_genre(user)
-        songManager = SongManager()
-        songList = songManager.get_songs()
-        resp = make_response(render_template("index.html", message=message, genres=genres, songList=songList))
-        resp.set_cookie('username', username)
-        return resp
+    else:
+        username = request.cookies.get('username')
+        user = User(username)
+        message = "Hello " + username
+    genres = userManager.get_user_genre(user)
+    songManager = SongManager()
+    songList = songManager.get_songs()
+    playlistManager = PlaylistManager()
+    playlists = playlistManager.get_user_playlists(username)
+    resp = make_response(render_template("index.html", message=message, genres=genres, songList=songList, playlists=playlists))
+    resp.set_cookie('username', username)
+    return resp
+
+
+@app.route('/genreButton', methods=['POST'])
+def genre_button():
+    username = request.cookies.get('username')
+    genre = request.form['genre']
+    user = User(username)
+    userManager = UserManager()
+    if userManager.is_genre_in_user_genre(user, genre):
+        userManager.delete_user_genre(user, genre)
+    else:
+        userManager.insert_user_genre(user, genre)
+    return redirect('/home#settings')
+
+
+@app.route('/deleteUser', methods=['POST'])
+def delete_user_button():
+    username = request.cookies.get('username')
+    userManager = UserManager()
+    userManager.delete_user(username)
+    return redirect('/')
 
 
 @app.route('/homeGenre', )
