@@ -55,6 +55,15 @@ class UserManager:
         c.close()
         db.close()
 
+    def update_username(self, username, new_username):
+        db = self.database()
+        c = db.cursor()
+        sql = "UPDATE User SET username = %s WHERE username = %s"
+        c.execute(sql, (new_username, username))
+        db.commit()
+        c.close()
+        db.close()
+
     def insert_user_genre(self, user, genre):
         db = self.database()
         c = db.cursor()

@@ -1,6 +1,6 @@
 from model.song import *
 from model.user import *
-
+from model.playlist import *
 
 def introduction_prints():
     print("** Playlist Database **")
@@ -15,6 +15,7 @@ if input1 == "1":
     userManager = UserManager()
     user = userManager.get_user(username)
     songManager = SongManager()
+    playlistManager = PlaylistManager()
     if user is None:
         newUser = User(username)
         print(username + " not found in database. Do you want to create a new user? (y/n)")
@@ -36,6 +37,17 @@ if input1 == "1":
             command = input("Genre to be deleted:")
             userManager.delete_user_genre(user, command)
     elif command == "insert":
-        command = input("Song to be inserted:")
-        song = Song(123, 'music', 'pop', 'Cheng', '12:02')
-        songManager.insert_song(song)
+        command = input("playlist to be inserted:")
+        #song = Song(123, 'music', 'pop', 'Cheng', '12:02')
+        #songManager.insert_song(song)
+        newlist = Playlist("list","Andrew","12312")
+        playlistManager.insert_playlist(newlist)
+    elif command == "p":
+        command = input("Password:")
+        playlistManager.make_private("list","Andrew",command)
+    elif command  == "pub":
+        command = input("Password:")
+        if playlistManager.password_check("list","Andrew",command) == True:
+            playlistManager.make_public("list","Andrew")
+        else:
+            print("Wrong password!")
