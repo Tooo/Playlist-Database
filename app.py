@@ -74,6 +74,15 @@ def delete_user_button():
     return redirect('/')
 
 
+@app.route('/updateUser', methods=['POST'])
+def update_username_button():
+    username = request.cookies.get('username')
+    userManager = UserManager()
+    new_username = request.form['username']
+    userManager.update_username(username, new_username)
+    return redirect('/')
+
+
 @app.route('/homeGenre', )
 def home_genre():
     userManager = UserManager()

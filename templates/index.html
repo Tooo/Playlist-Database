@@ -293,7 +293,11 @@
 			<!--settings page code-->
 			<div class="page" id="settings">
 				<div class ="faq-p">
-					<h2>Temp</h2>
+					<h2>Settings</h2>
+                        <form action="http://localhost:5000/updateUser" method="POST">
+                            <p><input type="text" name="username" required></p>
+                            <p><input type="submit" name="changeUsername" value="Change Username" /></p>
+                        </form>
                         <form action="http://localhost:5000/genreButton" method="POST">
                             <p><input type="text" name="genre" required></p>
                             <p><input type="submit" name="genreButton" value="Add/Remove Genre" /></p>
