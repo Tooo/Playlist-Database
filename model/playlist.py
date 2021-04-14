@@ -211,3 +211,13 @@ class PlaylistManager:
         c.execute(sql, (rating, comment, name, username, username2))
         c.close()
         db.close()
+        
+    def play_list_genre(self, name, username):
+        db = self.database()
+        c = db.cursor()
+        sql = "SELECT genre FROM song WHERE songID IN (SELECT songID FROM Contains WHERE name = %s AND username = %s)GROUP BY genre ORDER BY count(genre)LIMIT 1"
+        c.execute(sql, (name, username))
+        genre = c.fetchone()        
+        c.close()
+        db.close()
+        return genre
