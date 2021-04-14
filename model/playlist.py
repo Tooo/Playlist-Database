@@ -34,21 +34,28 @@ class PlaylistManager:
     def insert_playlist(self, playlist):
         db = self.database()
         c = db.cursor()
-        sql = "INSERT INTO Playlist (name,username,date) VALUES (%s,%s,playlist.date)"
-        c.execute(sql, (playlist.name, playlist.username))
-        sql = "INSERT INTO Public (name,username) VALUES (%s,%s)"
-        c.execute(sql, (playlist.name, playlist.username))
+        sql = "INSERT INTO Playlist (name,username,date) VALUES (%s,%s,%s)"
+        c.execute(sql, (playlist.name, playlist.username, playlist.date))
         db.commit()
         c.close()
         db.close()
 
-    def insert_playlist_with_name(self, name, username):
+    def insert_public_playlist(self, public_playlist):
+        self.insert_playlist(public_playlist)
         db = self.database()
         c = db.cursor()
-        sql = "INSERT INTO Playlist (name,username) VALUES (%s,%s)"
-        c.execute(sql, (name, username))
         sql = "INSERT INTO Public (name,username) VALUES (%s,%s)"
-        c.execute(sql, (name, username))
+        c.execute(sql, (public_playlist.name, public_playlist.username))
+        db.commit()
+        c.close()
+        db.close()
+
+    def insert_private_playlist(self, private_playlist):
+        self.insert_playlist(private_playlist)
+        db = self.database()
+        c = db.cursor()
+        sql = "INSERT INTO Private (name,username,password) VALUES (%s,%s,%s)"
+        c.execute(sql, (private_playlist.name, private_playlist.username, private_playlist.password))
         db.commit()
         c.close()
         db.close()
@@ -185,7 +192,7 @@ class PlaylistManager:
               "SELECT songID FROM Contains WHERE name = %s AND username = %s"
         c.execute(sql, (name, username, name2, username2))
         new_playlist = c.fetchall()
-        self.insert_playlist_with_name(name3, username3)
+        self.insert_public_playlist(Playlist(name3, username3, None))
         for song in new_playlist:
             self.insert_song_in_playlist(name3, username3, song)
 
