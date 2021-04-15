@@ -253,7 +253,6 @@ class SQLSetup:
         c.close()
 
 
-
 sqlSetup = SQLSetup()
 sqlSetup.create_playlist_database()
 sqlSetup.create_all_tables()
