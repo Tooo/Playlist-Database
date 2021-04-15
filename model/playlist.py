@@ -211,3 +211,32 @@ class PlaylistManager:
         c.execute(sql, (rating, comment, name, username, username2))
         c.close()
         db.close()
+        
+
+    
+    def playlist_genre(self, name, username):
+        db = self.database()
+        c = db.cursor()
+        sql = "SELECT genre FROM song WHERE songID IN (SELECT songID FROM Contains WHERE name = %s AND username = %s)GROUP BY genre ORDER BY count(genre) DESC LIMIT 1"
+        c.execute(sql, (name, username))
+        genre = c.fetchone()        
+        c.close()
+        db.close()
+        return genre
+    
+    
+    def playlist_count(self, name, username):
+        db = self.database()
+        c = db.cursor()
+        sql = "SELECT COUNT(S.songID)AS count FROM song AS S, contains AS C WHERE S.songID = C.songID AND C.name = %s AND C.username = %s GROUP BY C.name"
+        c.execute(sql, (name, username))
+        count = c.fetchone() 
+        c.close()
+        db.close()
+        return count
+        
+    def genre_list(self,playlists,username):
+        genrelist = []
+        for playlist in playlists:
+            genrelist.append((playlist[0], self.playlist_genre(playlist[0],username)[0],self.playlist_count(playlist[0],username)[0]))
+        return genrelist
