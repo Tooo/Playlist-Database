@@ -2,15 +2,33 @@
 <html lang="en">
 <head>
     <title>Playlist Database</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename ='styles/main.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js">
+    <link rel="stylesheet" href="{{ url_for('static', filename ='styles/style.css') }}">
 </head>
-<header>
-    <h1>Playlist Database</h1>
-</header>
-<body>
-    <form action="http://localhost:5000/home" method="POST">
-        <p>Enter Username: <input type="text" name="username" /></p>
-        <p><input type = "submit" name="login" value="Login" /></p>
-    </form>
-</body>
+
+    <body>
+        <nav class="navbar navbar navbar-dark bg-dark">
+            <button id="navbar_main_toggler" class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbar_main_collapse" aria-controls="navbar_main_collapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <a class="navbar-brand" tabindex = "-1"><span>Playlist Database</span></a>
+
+            <div tabindex="-1"></div>
+
+            <div id="navbar_main_collapse" class="collapse navbar-collapse">
+                <div class="format-container navbar-nav mr-auto">
+                    <select id="select_format">
+                        <option disabled>Placeholder</option>
+                    </select>
+                </div>
+            </div>
+        </nav>
+        <form action="http://localhost:5000/home" method="POST">
+            <div class="centered input-group pt-3" style="margin-left: 25%; width: 50%">
+                <input type="text" class="form-control " placeholder="Enter Username" type="submit" name="username" required>
+                <button type = "submit" class="btn btn-outline-secondary" name = "login">Login</button>
+            </div>
+        </form>
+    </body>
 </html>

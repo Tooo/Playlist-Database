@@ -18,6 +18,10 @@
                 .dataTables_length{
                 color: white;
                 }
+
+                form, label{
+                    color: white !important;
+                }
             </style>
 
             <link rel="apple-touch-icon" sizes="180x180"    href="{{ url_for('static', filename ='images/apple-touch-icon.png') }}">
@@ -60,7 +64,6 @@
 				</div>
 			</section>
 		</section>
-
 
 			<!--home page code-->
 			<div class="page" id="home" >
@@ -151,11 +154,31 @@
 			</div>
 
 			<div class="page" id="createplaylist">
+                <br>
+                <div class="form-check-inline">
+                  <label class="form-check-label">
+                    <input id=plPublic type="radio" class="form-check-input" name="optradio">Public
+                  </label>
+                </div>
+                <div class="form-check-inline">
+                  <label class="form-check-label">
+                    <input id=plPrivate type="radio" class="form-check-input" name="optradio">Private
+                  </label>
+                </div>
 
-				<form>
-					<input type ="submit" value="Share" style="float:right; margin-right:10%">
-					<input type = "text" id = "password" placeholder = "password" style="float:right; margin-right:1%">
-				</form>
+            <form class = "form-inline">
+              <div class="form-group ml-3 pr-3">
+                <label>Playlist Name: </label>
+                <input type="text" class="form-control" id="name" aria-describedby="emailHelp" placeholder="My Pop Playlist" required>
+              </div>
+              <div class="form-group form-inline pr-3">
+                <label>Password: </label>
+                <input id = plPassword type ="text" class="form-control" placeholder="Password">
+              </div>
+                <div class ="text-right">
+                  <button type="submit" class="btn btn-success">Submit</button>
+                </div>
+            </form>
 
 				<br>
                     <div class="container mb-3 mt-3">
@@ -188,22 +211,26 @@
                     <div class="container mb-3 mt-3">
                         <table class="table table-striped table-bordered pDataTable" width="100%">
                             <thead>
-                                <tr style="background-color: gray">
+                                <tr style="background-color: cyan">
                                     <th>Title</th>
                                     <th>Artist</th>
                                     <th>Duration</th>
                                     <th>Genre</th>
-                                    <th>+</th>
+                                    <th>Add?</th>
                                 </tr>
                             </thead>
                                 <tbody>
                                     {% for song in songList %}
-                                        <tr style="background-color: white">
+                                        <tr style="background-color: lightcyan">
                                             <td>{{ song[1] }}</td>
                                             <td>{{ song[3] }}</td>
                                             <td>{{ song[2] }}</td>
                                             <td>{{ song[4] }}</td>
-                                            <td><button class = "btn btn-secondary" type="button" style="position: absolute;">+</button></td>
+                                            <form action="http://localhost:5000/addSong" method="POST">
+                                                <td>
+                                                    <button class = "btn btn-secondary" type="button" name="addsong" value={{ song[0]}}>+</button>
+                                                </td>
+                                            </form>
                                         </tr>
                                     {% endfor %}
                                 </tbody>
@@ -225,6 +252,8 @@
                                 <th>Artist</th>
                                 <th>Duration</th>
                                 <th>Genre</th>
+                                <th>Net Rating</th>
+                                <th>Your Rating</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -234,6 +263,23 @@
                                 <td>{{ song[3] }}</td>
                                 <td>{{ song[2] }}</td>
                                 <td>{{ song[4] }}</td>
+                                <td> 0  </td> <!-- wherever this is stored, placeholder for now-->
+                                <td>
+                                 <form action="http://localhost:5000/home" method="POST" >
+                                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                            <label class = "btn btn-outline-success">
+                                                <input type="radio" name="userRating" id="ratingUp" value="up" autocomplete="off">↑
+                                            </label>
+                                            <label class = "btn btn-outline-dark active">
+                                                <input type="radio" name="userRating" id="ratingNull" value="none" autocomplete="off" checked>·
+                                            </label>
+                                            <label class = "btn btn-outline-danger">
+                                                <input type="radio" name="userRating" id="ratingDown" value="down" autocomplete="off">↓
+                                            </label>
+                                        </div>
+                                    </form>
+
+                                </td>
                             </tr>
                         {% endfor %}
                         </tbody>
@@ -249,15 +295,47 @@
 			<!--settings page code-->
 			<div class="page" id="settings">
 				<div class ="faq-p">
-					<h2>Temp</h2>
+					<h2>Settings</h2>
+                        <form action="http://localhost:5000/updateUser" method="POST">
+                            <p><input type="text" name="username" required></p>
+                            <button type="submit" name="changeUsername" class="btn btn-primary mb-2">Change Username</button>
+                        </form>
+
+                        <br>
+
                         <form action="http://localhost:5000/genreButton" method="POST">
                             <p><input type="text" name="genre" /></p>
-                            <p><input type="submit" name="genreButton" value="Add/Remove Genre" /></p>
+                            <button type="submit" name="genreButton" class="btn btn-primary mb-2">Add/Remove Genre</button>
                         </form>
+
+                        <br>
+
                         <form action="http://localhost:5000/deleteUser" method="POST">
-                             <p><input type="submit" name="delete" value="Delete Account" /></p>
+                            <button type="submit" name="delete" class="btn btn-primary mb-2">Delete Account</button>
                         </form>
+
 				</div>
+
+                <div class="container mb-3 mt-3">
+
+                        <table class="table table-striped table-bordered pDataTable" width="100%">
+                            <thead>
+                                <th style ="background-color: gray">Popular Songs</th>
+                            </thead>
+                            <tbody>
+                                {% for song in popular_songs %}
+                                    <tr style ="background-color: white">
+                                        <td>{{song[0]}}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+
+
+
+
+                </div>
+
 			</div>
 
 			<!--logout page code-->
@@ -271,6 +349,16 @@
             <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
             <script>
                 $('.pDataTable').DataTable();
+
+                $(function(){
+                   $('#plPublic').on('click', function(){
+                      $('#plPassword').prop('disabled', true);
+                   });
+
+                   $('#plPrivate').on('click', function(){
+                      $('#plPassword').prop('disabled', false);
+                   });
+                });
             </script>
 
 			</body>

@@ -1,3 +1,5 @@
+from time import time
+
 from flask import *
 
 from model.playlist import *
@@ -9,6 +11,11 @@ app = Flask(__name__)
 
 @app.route('/', methods=['POST', 'GET'])
 def login_page():
+    if request.method == 'POST':
+        if 'delete' in request.form:
+            username = request.cookies.get('username')
+            userManager = UserManager()
+            userManager.delete_user(username)
     return render_template('login.html')
 
 
@@ -24,6 +31,11 @@ def home_page():
             userManager.insert_user(user)
         else:
             message = "Hello " + username
+    # elif 'addSong' in request.form:
+    #     addSong = request.form['addSong']
+    #
+    # elif 'userRating' in request.form:
+    #     userRating = request.form['userRating']
     else:
         username = request.cookies.get('username')
         user = User(username)
@@ -34,9 +46,26 @@ def home_page():
     playlistManager = PlaylistManager()
     playlists = playlistManager.get_user_playlists(username)
     listofgenres = playlistManager.genre_list(playlists, username)
-    resp = make_response(render_template("index.html", message=message, genres=genres, songList=songList, playlists=playlists,genrelists = listofgenres))
+    popular_songs = songManager.song_in_every_playlist()
+    resp = make_response(
+        render_template("index.html", message=message, genres=genres, songList=songList, playlists=playlists,
+                        genrelists=listofgenres, popular_songs=popular_songs))
     resp.set_cookie('username', username)
     return resp
+
+
+@app.route('/createPlaylist', methods=['POST'])
+def create_playlist_button():
+    username = request.cookies.get('username')
+    name = request.form['plName']
+    playlistManager = PlaylistManager()
+    if not playlistManager.is_playlist_in_user(name, username):
+        if request.form['visibility'] == "private":
+            password = request.form['plPassword']
+            playlistManager.insert_private_playlist(PrivatePlaylist(name, username, time(), password))
+        else:
+            playlistManager.insert_public_playlist(PublicPlaylist(name, username, time()))
+    return redirect('/home#playlist')
 
 
 @app.route('/genreButton', methods=['POST'])
@@ -57,6 +86,15 @@ def delete_user_button():
     username = request.cookies.get('username')
     userManager = UserManager()
     userManager.delete_user(username)
+    return redirect('/')
+
+
+@app.route('/updateUser', methods=['POST'])
+def update_username_button():
+    username = request.cookies.get('username')
+    userManager = UserManager()
+    new_username = request.form['username']
+    userManager.update_username(username, new_username)
     return redirect('/')
 
 
