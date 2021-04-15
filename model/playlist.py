@@ -240,3 +240,15 @@ class PlaylistManager:
         for playlist in playlists:
             genrelist.append((playlist[0], self.playlist_genre(playlist[0],username)[0],self.playlist_count(playlist[0],username)[0]))
         return genrelist
+    
+    #just to have a divison function.. this is the same one from lecture. It finds the songs that are in every playlist
+    def song_in_every_playlist():
+        db = self.database()
+        c = db.cursor()
+        sql = "SELECT songID FROM contains GROUP BY songID HAVING COUNT(*) = (SELECT COUNT(*) FROM playlist)"
+        c.execute(sql)
+        songs = c.fetchall()        
+        c.close()
+        db.close()
+        return songs
+    
