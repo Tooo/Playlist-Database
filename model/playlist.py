@@ -212,7 +212,9 @@ class PlaylistManager:
         c.close()
         db.close()
         
-    def play_list_genre(self, name, username):
+
+    
+    def playlist_genre(self, name, username):
         db = self.database()
         c = db.cursor()
         sql = "SELECT genre FROM song WHERE songID IN (SELECT songID FROM Contains WHERE name = %s AND username = %s)GROUP BY genre ORDER BY count(genre) DESC LIMIT 1"
@@ -221,3 +223,32 @@ class PlaylistManager:
         c.close()
         db.close()
         return genre
+    
+    
+    def playlist_count(self, name, username):
+        db = self.database()
+        c = db.cursor()
+        sql = "SELECT COUNT(S.songID)AS count FROM song AS S, contains AS C WHERE S.songID = C.songID AND C.name = %s AND C.username = %s GROUP BY C.name"
+        c.execute(sql, (name, username))
+        count = c.fetchone() 
+        c.close()
+        db.close()
+        return count
+        
+    def genre_list(self,playlists,username):
+        genrelist = []
+        for playlist in playlists:
+            genrelist.append((playlist[0], self.playlist_genre(playlist[0],username)[0],self.playlist_count(playlist[0],username)[0]))
+        return genrelist
+    
+    #just to have a divison function.. this is the same one from lecture. It finds the songs that are in every playlist
+    def song_in_every_playlist():
+        db = self.database()
+        c = db.cursor()
+        sql = "SELECT songID FROM contains GROUP BY songID HAVING COUNT(*) = (SELECT COUNT(*) FROM playlist)"
+        c.execute(sql)
+        songs = c.fetchall()        
+        c.close()
+        db.close()
+        return songs
+    
