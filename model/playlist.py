@@ -34,8 +34,28 @@ class PlaylistManager:
     def insert_playlist(self, playlist):
         db = self.database()
         c = db.cursor()
-        sql = "INSERT INTO Playlist (name,username,date) VALUES (%s,%s,playlist.date)"
-        c.execute(sql, (playlist.name, playlist.username))
+        sql = "INSERT INTO Playlist (name,username,date) VALUES (%s,%s,%s)"
+        c.execute(sql, (playlist.name, playlist.username, playlist.date))
+        db.commit()
+        c.close()
+        db.close()
+
+    def insert_public_playlist(self, public_playlist):
+        self.insert_playlist(public_playlist)
+        db = self.database()
+        c = db.cursor()
+        sql = "INSERT INTO Public (name,username) VALUES (%s,%s)"
+        c.execute(sql, (public_playlist.name, public_playlist.username))
+        db.commit()
+        c.close()
+        db.close()
+
+    def insert_private_playlist(self, private_playlist):
+        self.insert_playlist(private_playlist)
+        db = self.database()
+        c = db.cursor()
+        sql = "INSERT INTO Private (name,username,password) VALUES (%s,%s,%s)"
+        c.execute(sql, (private_playlist.name, private_playlist.username, private_playlist.password))
         db.commit()
         c.close()
         db.close()
@@ -90,8 +110,8 @@ class PlaylistManager:
     def insert_song_in_playlist(self, name, username, songID):
         db = self.database()
         c = db.cursor()
-        sql = "INSERT INTO Contains (name, username, songID) VALUES (%s,%s,%d)"
-        c.execute(sql, (name, username))
+        sql = "INSERT INTO Contains (name, username, songID) VALUES (%s,%s,%s)"
+        c.execute(sql, (name, username, songID))
         db.commit()
         c.close()
         db.close()
@@ -113,5 +133,81 @@ class PlaylistManager:
         sql = "DELETE FROM Contains WHERE name = %s AND username = %s AND songID = %d"
         c.execute(sql, (name, username, songID))
         db.commit()
+        c.close()
+        db.close()
+
+    def make_private(self, name, username, password):
+        db = self.database()
+        c = db.cursor()
+        sql = "DELETE FROM Public WHERE name = %s AND username = %s"
+        c.execute(sql, (name, username))
+        sql = "INSERT INTO Private (name,username,password) VALUES (%s,%s,%s)"
+        c.execute(sql, (name, username, password))
+        db.commit()
+        c.close()
+        db.close()
+
+    def make_public(self, name, username):
+        db = self.database()
+        c = db.cursor()
+        sql = "DELETE FROM Private WHERE name = %s AND username = %s"
+        c.execute(sql, (name, username))
+        sql = "INSERT INTO Public (name,username) VALUES (%s,%s)"
+        c.execute(sql, (name, username))
+        db.commit()
+        c.close()
+        db.close()
+
+    def password_check(self, name, username, password):
+        db = self.database()
+        c = db.cursor()
+        sql = "SELECT password FROM Private WHERE name = %s AND username = %s AND password =%s"
+        c.execute(sql, (name, username, password))
+        playlist = c.fetchone()
+        c.close()
+        db.close()
+        if playlist is None:
+            return False
+        else:
+            return True
+
+    def is_private(self, name, username):
+        db = self.database()
+        c = db.cursor()
+        sql = "SELECT name FROM Public WHERE name = %s AND username = %s"
+        c.execute(sql, (name, username))
+        playlist = c.fetchone()
+        c.close()
+        db.close()
+        if playlist is None:
+            return True
+        else:
+            return False
+
+    def join_playlist(self, name, username, name2, username2, name3, username3):
+        db = self.database()
+        c = db.cursor()
+        sql = "SELECT songID FROM Contains WHERE name = %s AND username = %s " \
+              "UNION " \
+              "SELECT songID FROM Contains WHERE name = %s AND username = %s"
+        c.execute(sql, (name, username, name2, username2))
+        new_playlist = c.fetchall()
+        self.insert_public_playlist(Playlist(name3, username3, None))
+        for song in new_playlist:
+            self.insert_song_in_playlist(name3, username3, song)
+
+    def share_playlist(self, name, username, username2):
+        db = self.database()
+        c = db.cursor()
+        sql = "INSERT INTO share (name,username, superUsername) VALUES (%s,%s,%s)"
+        c.execute(sql, (name, username, username2))
+        c.close()
+        db.close()
+
+    def rate_playlist(self, rating, comment, name, username, username2):
+        db = self.database()
+        c = db.cursor()
+        sql = "UPDATE share SET rating = %d AND comment = %s WHERE name = %s AND username = %s AND superUsername = %s"
+        c.execute(sql, (rating, comment, name, username, username2))
         c.close()
         db.close()

@@ -56,6 +56,62 @@ def home_page():
         resp = make_response(render_template("index.html", message=message, genres=genres, songList=songList, playlists=playlists))
         resp.set_cookie('username', username)
         return resp
+    else:
+        username = request.cookies.get('username')
+        user = User(username)
+        message = "Hello " + username
+    genres = userManager.get_user_genre(user)
+    songManager = SongManager()
+    songList = songManager.get_songs()
+    playlistManager = PlaylistManager()
+    playlists = playlistManager.get_user_playlists(username)
+    resp = make_response(render_template("index.html", message=message, genres=genres, songList=songList, playlists=playlists))
+    resp.set_cookie('username', username)
+    return resp
+
+
+@app.route('/createPlaylist', methods=['POST'])
+def create_playlist_button():
+    username = request.cookies.get('username')
+    name = request.form['plName']
+    playlistManager = PlaylistManager()
+    if not playlistManager.is_playlist_in_user(name, username):
+        if request.form['visibility'] == "private":
+            password = request.form['plPassword']
+            playlistManager.insert_private_playlist(PrivatePlaylist(name, username, time(), password))
+        else:
+            playlistManager.insert_public_playlist(PublicPlaylist(name, username, time()))
+    return redirect('/home#playlist')
+
+
+@app.route('/genreButton', methods=['POST'])
+def genre_button():
+    username = request.cookies.get('username')
+    genre = request.form['genre']
+    user = User(username)
+    userManager = UserManager()
+    if userManager.is_genre_in_user_genre(user, genre):
+        userManager.delete_user_genre(user, genre)
+    else:
+        userManager.insert_user_genre(user, genre)
+    return redirect('/home#settings')
+
+
+@app.route('/deleteUser', methods=['POST'])
+def delete_user_button():
+    username = request.cookies.get('username')
+    userManager = UserManager()
+    userManager.delete_user(username)
+    return redirect('/')
+
+
+@app.route('/updateUser', methods=['POST'])
+def update_username_button():
+    username = request.cookies.get('username')
+    userManager = UserManager()
+    new_username = request.form['username']
+    userManager.update_username(username, new_username)
+    return redirect('/')
 
 
 @app.route('/homeGenre', )
@@ -116,11 +172,6 @@ def settings_page():
         resp = make_response(render_template("settings.html", genres=genres))
         return resp
 
-@app.route('/addsong', methods=['POST', 'GET'])
-def addsong_page():
-    return
-
 
 if __name__ == '__main__':
     app.run(debug=True)
-

@@ -38,7 +38,77 @@ class SongManager:
         c = db.cursor()
         c.execute("SELECT * FROM Song")
         songsList = c.fetchall()
-        db.commit()
         c.close()
         db.close()
         return songsList
+
+    def search_all_songs(self, search):
+        db = self.database()
+        c = db.cursor()
+        sql = "SELECT * FROM SONG WHERE name LIKE '%' + %s + '%' " \
+              "UNION " \
+              "SELECT * FROM SONG WHERE artist LIKE '%' + %s + '%'"
+        c.execute(sql, (search, search))
+        songList = c.fetchall()
+        c.close()
+        db.close()
+        return songList
+
+    def search_all_songs_genres(self, search):
+        db = self.database()
+        c = db.cursor()
+        sql = "SELECT * FROM SONG WHERE genre LIKE '%' + %s + '%'"
+        c.execute(sql, (search, ))
+        songList = c.fetchall()
+        c.close()
+        db.close()
+        return songList
+
+    def insert_song_rating(self, songID, username, rating):
+        db = self.database()
+        c = db.cursor()
+        sql = "INSERT INTO Rate (username, songID, Rating) VALUES (%s, %s, %s)"
+        c.execute(sql, (username, songID, rating))
+        db.commit()
+        c.close()
+        db.close()
+
+    def get_song_rating(self, songID, username):
+        db = self.database()
+        c = db.cursor()
+        sql = "SELECT * FROM Rate WHERE songID = %s AND username = %s"
+        c.execute(sql, (songID, username))
+        rating = c.fetchone()
+        db.commit()
+        c.close()
+        db.close()
+        return rating
+
+    def update_song_rating(self, songID, username, rating):
+        db = self.database()
+        c = db.cursor()
+        sql = "UPDATE Rate SET rating = %s WHERE songID = %s AND username = %s"
+        c.execute(sql, (rating, songID, username))
+        db.commit()
+        c.close()
+        db.close()
+
+    def delete_song_rating(self, songID, username):
+        db = self.database()
+        c = db.cursor()
+        sql = "DELETE FROM Rate WHERE songID = %s AND username = %s"
+        c.execute(sql, (songID, username))
+        db.commit()
+        c.close()
+        db.close()
+
+    def get_all_user_song_ratings(self, username):
+        db = self.database()
+        c = db.cursor()
+        sql = "SELECT * FROM Rate WHERE username = %s"
+        c.execute(sql, (username,))
+        ratingList = c.fetchall()
+        db.commit()
+        c.close()
+        db.close()
+        return ratingList

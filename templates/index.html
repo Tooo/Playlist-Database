@@ -166,8 +166,8 @@
 
             <form class = "form-inline">
               <div class="form-group ml-3 pr-3">
-                <label>Name your playlist: </label>
-                <input type="plName" class="form-control" id="name" aria-describedby="emailHelp" placeholder="My Pop Playlist">
+                <label>Playlist Name: </label>
+                <input type="text" class="form-control" id="name" aria-describedby="emailHelp" placeholder="My Pop Playlist" required>
               </div>
               <div class="form-group form-inline pr-3">
                 <label>Password: </label>
@@ -182,7 +182,7 @@
                     <div class="container mb-3 mt-3">
                         <table class="table table-striped table-bordered pDataTable" width="100%">
                             <thead>
-                                <tr style = "background-color: gray">
+                                <tr style = "background-color: cyan">
                                     <th>Title</th>
                                     <th>Artist</th>
                                     <th>Duration</th>
@@ -191,7 +191,7 @@
                             </thead>
                             <tbody>
                                 {% for song in songList %}
-                                    <tr style="background-color: white">
+                                    <tr style="background-color: lightcyan">
                                         <td>{{ song[1] }}</td>
                                         <td>{{ song[3] }}</td>
                                         <td>{{ song[2] }}</td>
@@ -214,7 +214,6 @@
                                     <th>Artist</th>
                                     <th>Duration</th>
                                     <th>Genre</th>
-                                    <th>Net Rating</th>
                                     <th>Add?</th>
                                 </tr>
                             </thead>
@@ -225,7 +224,6 @@
                                             <td>{{ song[3] }}</td>
                                             <td>{{ song[2] }}</td>
                                             <td>{{ song[4] }}</td>
-                                            <td> net rating  </td> <!-- wherever this is stored, placeholder for now-->
                                             <form action="http://localhost:5000/addSong" method="POST">
                                                 <td>
                                                     <button class = "btn btn-secondary" type="button" name="addsong" value={{ song[0]}}>+</button>
@@ -265,7 +263,7 @@
                                 <td>{{ song[4] }}</td>
                                 <td> net rating  </td> <!-- wherever this is stored, placeholder for now-->
                                 <td>
-                                    <form action="http://localhost:5000/home" method="POST" >
+                                 <form action="http://localhost:5000/home" method="POST" >
                                         <div class="btn-group btn-group-toggle" data-toggle="buttons">
                                             <label class = "btn btn-outline-success">
                                                 <input type="radio" name="userRating" id="ratingUp" value="up" autocomplete="off">↑
@@ -292,7 +290,7 @@
 
 			</div>
 
-            <!--settings page code-->
+			<!--settings page code-->
 			<div class="page" id="settings">
 				<div class ="faq-p">
 					<h2>Temp</h2>
@@ -319,14 +317,17 @@
 
                 <div class="container mb-3 mt-3">
 
-                    <table class="table table-striped table-bordered pDataTable" width="100%">
-                        <thead>
-                            <th style ="background-color: gray">Division Query</th>
-                        </thead>
-                        <tbody>
-                            <td style ="background-color: white">table{0}</td>
-                        </tbody>
-                    </table>
+                    {% for tablesize in table %}
+                        <table class="table table-striped table-bordered pDataTable" width="100%">
+                            <thead>
+                                <th style ="background-color: gray">Division Query</th>
+                            </thead>
+                            <tbody>
+                                <td style ="background-color: white">table{0}</td>
+                            </tbody>
+                        </table>
+                    {% endfor %}
+
 
 
                 </div>

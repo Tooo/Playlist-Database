@@ -4,11 +4,8 @@ from config import *
 
 
 class User:
-    genres = []
-
     def __init__(self, username):
         self.username = username
-        self.genre = []
 
 
 class UserManager:
@@ -51,6 +48,15 @@ class UserManager:
         sql = "DELETE FROM user WHERE username = %s"
         c.execute(sql, (username,))
         print("user(s) deleted")
+        db.commit()
+        c.close()
+        db.close()
+
+    def update_username(self, username, new_username):
+        db = self.database()
+        c = db.cursor()
+        sql = "UPDATE User SET username = %s WHERE username = %s"
+        c.execute(sql, (new_username, username))
         db.commit()
         c.close()
         db.close()
