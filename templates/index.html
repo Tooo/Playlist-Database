@@ -154,31 +154,34 @@
 			</div>
 
 			<div class="page" id="createplaylist">
-                <br>
+            <br>
+            <form action="http://localhost:5000/createPlaylist" method="POST">
                 <div class="form-check-inline">
                   <label class="form-check-label">
-                    <input id=plPublic type="radio" class="form-check-input" name="optradio">Public
+                    <input id=plPublic type="radio" class="form-check-input" name="visibility" value="public" required>Public
                   </label>
                 </div>
                 <div class="form-check-inline">
                   <label class="form-check-label">
-                    <input id=plPrivate type="radio" class="form-check-input" name="optradio">Private
+                    <input id=plPrivate type="radio" class="form-check-input" name="visibility" value="private">Private
                   </label>
                 </div>
 
-            <form class = "form-inline">
-              <div class="form-group ml-3 pr-3">
-                <label>Playlist Name: </label>
-                <input type="text" class="form-control" id="name" aria-describedby="emailHelp" placeholder="My Pop Playlist" required>
-              </div>
-              <div class="form-group form-inline pr-3">
-                <label>Password: </label>
-                <input id = plPassword type ="text" class="form-control" placeholder="Password">
-              </div>
-                <div class ="text-right">
-                  <button type="submit" class="btn btn-success">Submit</button>
-                </div>
+                <form class = "form-group form-inline">
+                    <div class="centered form-group form-inline pr-3">
+                        <label>Playlist Name: </label>
+                        <input type="text" class="form-control" id="name" placeholder="My Pop Playlist" name="plName"required>
+                        <label>Password: </label>
+                        <input id = plPassword type="password" class="form-control" name="plPassword">
+                        <button type="submit" class="btn btn-success">Submit</button>
+                    </div>
+
             </form>
+            </form>
+
+
+
+
 
 				<br>
                     <div class="container mb-3 mt-3">
