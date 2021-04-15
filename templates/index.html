@@ -317,16 +317,17 @@
 
                 <div class="container mb-3 mt-3">
 
-                    {% for tablesize in table %}
                         <table class="table table-striped table-bordered pDataTable" width="100%">
                             <thead>
                                 <th style ="background-color: gray">Division Query</th>
                             </thead>
                             <tbody>
-                                <td style ="background-color: white">table{0}</td>
+                                {% for tablesize in table %}
+                                    <td style ="background-color: white">table{0}</td>
+                                {% endfor %}
                             </tbody>
                         </table>
-                    {% endfor %}
+
 
 
 
