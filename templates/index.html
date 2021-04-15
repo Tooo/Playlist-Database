@@ -263,7 +263,7 @@
                                 <td>{{ song[3] }}</td>
                                 <td>{{ song[2] }}</td>
                                 <td>{{ song[4] }}</td>
-                                <td> net rating  </td> <!-- wherever this is stored, placeholder for now-->
+                                <td> 0  </td> <!-- wherever this is stored, placeholder for now-->
                                 <td>
                                  <form action="http://localhost:5000/home" method="POST" >
                                         <div class="btn-group btn-group-toggle" data-toggle="buttons">
@@ -303,7 +303,7 @@
 
                         <br>
 
-                        <form action="http://localhost:5000/home" method="POST">
+                        <form action="http://localhost:5000/genreButton" method="POST">
                             <p><input type="text" name="genre" /></p>
                             <button type="submit" name="genreButton" class="btn btn-primary mb-2">Add/Remove Genre</button>
                         </form>
@@ -311,7 +311,6 @@
                         <br>
 
                         <form action="http://localhost:5000/deleteUser" method="POST">
-                            <p><input type="text" name="delete"/></p>
                             <button type="submit" name="delete" class="btn btn-primary mb-2">Delete Account</button>
                         </form>
 

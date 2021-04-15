@@ -1,3 +1,5 @@
+from time import time
+
 from flask import *
 
 from model.playlist import *
@@ -5,6 +7,7 @@ from model.song import *
 from model.user import *
 
 app = Flask(__name__)
+
 
 @app.route('/', methods=['POST', 'GET'])
 def login_page():
@@ -18,44 +21,21 @@ def login_page():
 
 @app.route('/home', methods=['POST', 'GET'])
 def home_page():
-    if request.method == 'POST':
-        userManager = UserManager()
-        if 'login' in request.form:
-            username = request.form['username']
-            user = userManager.get_user(username)
-            if user is None:
-                user = User(username)
-                message = username + " has been created"
-                userManager.insert_user(user)
-            else:
-                message = "Hello " + username
-        elif 'genreButton' in request.form:
-            username = request.cookies.get('username')
-            genre = request.form['genre']
+    userManager = UserManager()
+    if 'login' in request.form:
+        username = request.form['username']
+        user = userManager.get_user(username)
+        if user is None:
             user = User(username)
-            if userManager.is_genre_in_user_genre(user, genre):
-                userManager.delete_user_genre(user, genre)
-            else:
-                userManager.insert_user_genre(user, genre)
-            message = "Hello " + username
-        elif 'addSong' in request.form:
-            addSong = request.form['addSong']
-
-        elif 'userRating' in request.form:
-            userRating = request.form['userRating']
-
+            message = username + " has been created"
+            userManager.insert_user(user)
         else:
-            username = request.cookies.get('username')
-            user = User(username)
             message = "Hello " + username
-        genres = userManager.get_user_genre(user)
-        songManager = SongManager()
-        songList = songManager.get_songs()
-        playlistManager = PlaylistManager()
-        playlists = playlistManager.get_user_playlists(username)
-        resp = make_response(render_template("index.html", message=message, genres=genres, songList=songList, playlists=playlists))
-        resp.set_cookie('username', username)
-        return resp
+    # elif 'addSong' in request.form:
+    #     addSong = request.form['addSong']
+    #
+    # elif 'userRating' in request.form:
+    #     userRating = request.form['userRating']
     else:
         username = request.cookies.get('username')
         user = User(username)
@@ -66,7 +46,9 @@ def home_page():
     playlistManager = PlaylistManager()
     playlists = playlistManager.get_user_playlists(username)
     listofgenres = playlistManager.genre_list(playlists, username)
-    resp = make_response(render_template("index.html", message=message, genres=genres, songList=songList, playlists=playlists,genrelists = listofgenres))
+    resp = make_response(
+        render_template("index.html", message=message, genres=genres, songList=songList, playlists=playlists,
+                        genrelists=listofgenres))
     resp.set_cookie('username', username)
     return resp
 
