@@ -191,8 +191,71 @@ class SQLSetup:
             c.close()
         db.close()
 
+    def sql_trigger(self):
+        db = mysql.connector.connect(
+            host=self.host,
+            user=self.user,
+            password=self.password,
+            database=self.db
+        )
+        self.create_user_audit(db)
+        self.before_user_insert_trigger(db)
+        self.before_user_update_trigger(db)
+        self.before_user_delete_trigger(db)
+        db.close()
+
+    def create_user_audit(self, db):
+        c = db.cursor()
+        c.execute("""CREATE TABLE IF NOT EXISTS user_audit (
+                            id INT AUTO_INCREMENT PRIMARY KEY,
+                            username VARCHAR(255),
+                            newUsername VARCHAR(255),
+                            changeDate DATETIME,
+                            action VARCHAR(50)
+        )""")
+        c.close()
+
+    def before_user_insert_trigger(self, db):
+        c = db.cursor()
+        c.execute("""CREATE TRIGGER before_user_create
+                        BEFORE INSERT ON user
+                        FOR EACH ROW
+                        INSERT INTO user_audit
+                            SET action = 'insert',
+                                username = NEW.username,
+                                changeDate = NOW()
+        """)
+        c.close()
+
+    def before_user_update_trigger(self, db):
+        c = db.cursor()
+        c.execute("""CREATE TRIGGER before_user_update
+                        BEFORE UPDATE ON user
+                        FOR EACH ROW
+                        INSERT INTO user_audit
+                            SET action = 'update',
+                                username = OLD.username,
+                                newUsername = NEW.username,
+                                changeDate = NOW()
+                """)
+        c.close()
+
+    def before_user_delete_trigger(self, db):
+        c = db.cursor()
+        c.execute("""CREATE TRIGGER before_user_delete
+                        BEFORE DELETE ON user
+                        FOR EACH ROW
+                        INSERT INTO user_audit
+                            SET action = 'delete',
+                                username = OLD.username,
+                                changeDate = NOW()
+                """)
+        c.close()
+
+
 
 sqlSetup = SQLSetup()
 sqlSetup.create_playlist_database()
 sqlSetup.create_all_tables()
 sqlSetup.import_songs()
+sqlSetup.sql_trigger()
