@@ -109,7 +109,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                            {% for playlist in playlists %}
+                            {% for playlist in genrelists %}
                                 <tr style = "background-color: white">
                                     <td>{{ playlist[0] }}</td> <!--playlist number-->
                                     <td>{{ playlist[1] }}</td> <!--genre-->
@@ -137,13 +137,15 @@
                                 <tr style = "background-color: gray">
                                     <th>Playlist</th>
                                     <th>Genre</th>
+                                    <th>Song Count</th>
                                 </tr>
                             </thead>
                             <tbody>
-                            {% for playlist in playlists %}
+                            {% for playlist in genrelists %}
                                 <tr style = "background-color: white">
                                     <td>{{ playlist[0] }}</td> <!--playlist number-->
                                     <td>{{ playlist[1] }}</td> <!--genre-->
+                                    <td>{{ playlist[2] }}</td> <!--count-->
                                 </tr>
                             {% endfor %}
                             </tbody>

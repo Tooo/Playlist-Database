@@ -211,3 +211,53 @@ class PlaylistManager:
         c.execute(sql, (rating, comment, name, username, username2))
         c.close()
         db.close()
+
+    def playlist_genre(self, name, username):
+        db = self.database()
+        c = db.cursor()
+        sql = "SELECT genre FROM song " \
+              "WHERE songID IN " \
+              "(SELECT songID FROM Contains WHERE name = %s AND username = %s)" \
+              "GROUP BY genre ORDER BY count(genre) DESC LIMIT 1"
+        c.execute(sql, (name, username))
+        genre = c.fetchone()
+        c.close()
+        db.close()
+        if genre is None:
+            return [None]
+        return genre
+
+    def playlist_count(self, name, username):
+        db = self.database()
+        c = db.cursor()
+        sql = "SELECT COUNT(S.songID) " \
+              "FROM song AS S, contains AS C " \
+              "WHERE S.songID = C.songID AND C.name = %s AND C.username = %s " \
+              "GROUP BY C.name"
+        c.execute(sql, (name, username))
+        count = c.fetchone()
+        c.close()
+        db.close()
+        if count is None:
+            return [0]
+        return count
+
+    def genre_list(self, playlists, username):
+        genrelist = []
+        for playlist in playlists:
+            genrelist.append((playlist[0], self.playlist_genre(playlist[0], username)[0],
+                              self.playlist_count(playlist[0], username)[0]))
+        return genrelist
+
+    def song_in_every_playlist(self):
+        db = self.database()
+        c = db.cursor()
+        sql = "SELECT songID " \
+              "FROM contains " \
+              "GROUP BY songID " \
+              "HAVING COUNT(*) = (SELECT COUNT(*) FROM playlist)"
+        c.execute(sql)
+        songs = c.fetchall()
+        c.close()
+        db.close()
+        return songs
