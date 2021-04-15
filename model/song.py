@@ -58,7 +58,7 @@ class SongManager:
         db = self.database()
         c = db.cursor()
         sql = "SELECT * FROM SONG WHERE genre LIKE '%' + %s + '%'"
-        c.execute(sql, (search, ))
+        c.execute(sql, (search,))
         songList = c.fetchall()
         c.close()
         db.close()
@@ -112,3 +112,17 @@ class SongManager:
         c.close()
         db.close()
         return ratingList
+
+    def song_in_every_playlist(self):
+        db = self.database()
+        c = db.cursor()
+        sql = "SELECT S.name " \
+              "FROM song S, contains C " \
+              "WHERE S.songID = C.songID " \
+              "GROUP BY S.songID " \
+              "HAVING COUNT(*) = (SELECT COUNT(*) FROM playlist)"
+        c.execute(sql)
+        songs = c.fetchall()
+        c.close()
+        db.close()
+        return songs

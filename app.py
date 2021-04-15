@@ -46,9 +46,10 @@ def home_page():
     playlistManager = PlaylistManager()
     playlists = playlistManager.get_user_playlists(username)
     listofgenres = playlistManager.genre_list(playlists, username)
+    popular_songs = songManager.song_in_every_playlist()
     resp = make_response(
         render_template("index.html", message=message, genres=genres, songList=songList, playlists=playlists,
-                        genrelists=listofgenres))
+                        genrelists=listofgenres, popular_songs=popular_songs))
     resp.set_cookie('username', username)
     return resp
 
