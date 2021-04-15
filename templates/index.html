@@ -164,11 +164,6 @@
                   </label>
                 </div>
 
-				<!--<form>
-					<input type ="submit" value="Share" style="float:right; margin-right:10%">
-					<input id = plPassword type ="text" id = "password" placeholder = "password" disabled style="float:right; margin-right:1%">
-				</form>-->
-
             <form class = "form-inline">
               <div class="form-group ml-3 pr-3">
                 <label>Name your playlist: </label>
@@ -187,7 +182,7 @@
                     <div class="container mb-3 mt-3">
                         <table class="table table-striped table-bordered pDataTable" width="100%">
                             <thead>
-                                <tr style = "background-color: cyan">
+                                <tr style = "background-color: gray">
                                     <th>Title</th>
                                     <th>Artist</th>
                                     <th>Duration</th>
@@ -196,7 +191,7 @@
                             </thead>
                             <tbody>
                                 {% for song in songList %}
-                                    <tr style="background-color: lightcyan">
+                                    <tr style="background-color: white">
                                         <td>{{ song[1] }}</td>
                                         <td>{{ song[3] }}</td>
                                         <td>{{ song[2] }}</td>
@@ -214,22 +209,28 @@
                     <div class="container mb-3 mt-3">
                         <table class="table table-striped table-bordered pDataTable" width="100%">
                             <thead>
-                                <tr style="background-color: gray">
+                                <tr style="background-color: cyan">
                                     <th>Title</th>
                                     <th>Artist</th>
                                     <th>Duration</th>
                                     <th>Genre</th>
+                                    <th>Net Rating</th>
                                     <th>Add?</th>
                                 </tr>
                             </thead>
                                 <tbody>
                                     {% for song in songList %}
-                                        <tr style="background-color: white">
+                                        <tr style="background-color: lightcyan">
                                             <td>{{ song[1] }}</td>
                                             <td>{{ song[3] }}</td>
                                             <td>{{ song[2] }}</td>
                                             <td>{{ song[4] }}</td>
-                                            <td><button class = "btn btn-secondary" type="button">+</button></td>
+                                            <td> net rating  </td> <!-- wherever this is stored, placeholder for now-->
+                                            <form action="http://localhost:5000/addSong" method="POST">
+                                                <td>
+                                                    <button class = "btn btn-secondary" type="button" name="addsong" value={{ song[0]}}>+</button>
+                                                </td>
+                                            </form>
                                         </tr>
                                     {% endfor %}
                                 </tbody>
@@ -264,17 +265,20 @@
                                 <td>{{ song[4] }}</td>
                                 <td> net rating  </td> <!-- wherever this is stored, placeholder for now-->
                                 <td>
-                                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                        <label class = "btn btn-outline-success">
-                                            <input type="radio" name="userRating" id = "ratingUp" autocomplete="off">↑
-                                        </label>
-                                        <label class = "btn btn-outline-dark active">
-                                            <input type="radio" name="userRating" id = "ratingNull" autocomplete="off" checked>·
-                                        </label>
-                                        <label class = "btn btn-outline-danger">
-                                            <input type="radio" name="userRating" id = "ratingNull" autocomplete="off">↓
-                                        </label>
-                                     </div>
+                                    <form action="http://localhost:5000/home" method="POST" >
+                                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                            <label class = "btn btn-outline-success">
+                                                <input type="radio" name="userRating" id="ratingUp" value="up" autocomplete="off">↑
+                                            </label>
+                                            <label class = "btn btn-outline-dark active">
+                                                <input type="radio" name="userRating" id="ratingNull" value="none" autocomplete="off" checked>·
+                                            </label>
+                                            <label class = "btn btn-outline-danger">
+                                                <input type="radio" name="userRating" id="ratingDown" value="down" autocomplete="off">↓
+                                            </label>
+                                        </div>
+                                    </form>
+
                                 </td>
                             </tr>
                         {% endfor %}
@@ -288,15 +292,45 @@
 
 			</div>
 
-			<!--settings page code-->
+            <!--settings page code-->
 			<div class="page" id="settings">
 				<div class ="faq-p">
 					<h2>Temp</h2>
+                        <form action="http://localhost:5000/updateUser" method="POST">
+                            <p><input type="text" name="username" required></p>
+                            <button type="submit" name="changeUsername" class="btn btn-primary mb-2">Change Username</button>
+                        </form>
+
+                        <br>
+
                         <form action="http://localhost:5000/home" method="POST">
                             <p><input type="text" name="genre" /></p>
-                            <p><input type="submit" name="genreButton" value="Add/Remove Genre" /></p>
+                            <button type="submit" name="genreButton" class="btn btn-primary mb-2">Add/Remove Genre</button>
                         </form>
+
+                        <br>
+
+                        <form action="http://localhost:5000/deleteUser" method="POST">
+                            <p><input type="text" name="delete"/></p>
+                            <button type="submit" name="delete" class="btn btn-primary mb-2">Delete Account</button>
+                        </form>
+
 				</div>
+
+                <div class="container mb-3 mt-3">
+
+                    <table class="table table-striped table-bordered pDataTable" width="100%">
+                        <thead>
+                            <th style ="background-color: gray">Division Query</th>
+                        </thead>
+                        <tbody>
+                            <td style ="background-color: white">table{0}</td>
+                        </tbody>
+                    </table>
+
+
+                </div>
+
 			</div>
 
 			<!--logout page code-->

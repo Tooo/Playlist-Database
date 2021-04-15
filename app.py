@@ -38,6 +38,12 @@ def home_page():
             else:
                 userManager.insert_user_genre(user, genre)
             message = "Hello " + username
+        elif 'addSong' in request.form:
+            addSong = request.form['addSong']
+
+        elif 'userRating' in request.form:
+            userRating = request.form['userRating']
+
         else:
             username = request.cookies.get('username')
             user = User(username)
@@ -110,6 +116,11 @@ def settings_page():
         resp = make_response(render_template("settings.html", genres=genres))
         return resp
 
+@app.route('/addsong', methods=['POST', 'GET'])
+def addsong_page():
+    return
+
 
 if __name__ == '__main__':
     app.run(debug=True)
+
