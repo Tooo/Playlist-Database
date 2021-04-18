@@ -119,7 +119,7 @@ class PlaylistManager:
     def get_songs_in_playlist(self, name, username):
         db = self.database()
         c = db.cursor()
-        sql = "SELECT songID FROM Contains WHERE name = %s AND username = %s"
+        sql = "SELECT * FROM Song WHERE songID IN (SELECT songID FROM Contains WHERE name = %s AND username = %s)"
         c.execute(sql, (name, username))
         songsList = c.fetchall()
         db.commit()
