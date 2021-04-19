@@ -126,3 +126,17 @@ class SongManager:
         c.close()
         db.close()
         return songs
+
+    def song_in_every_playlist(self):
+        db = self.database()
+        c = db.cursor()
+        sql = "SELECT S.name " \
+              "FROM song S, contains C " \
+              "WHERE S.songID = C.songID " \
+              "GROUP BY S.songID " \
+              "HAVING COUNT(*) = (SELECT COUNT(*) FROM playlist)"
+        c.execute(sql)
+        songs = c.fetchall()
+        c.close()
+        db.close()
+        return songs

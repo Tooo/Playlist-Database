@@ -128,6 +128,12 @@ nav {
     z-index: 5;
 }
 
+#main_view{
+    padding-left: 32px;
+    padding-right: 32px;
+    z-index: 5;
+}
+
 .playlist{
 
 }
