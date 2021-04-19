@@ -127,6 +127,7 @@ class PlaylistManager:
         db.close()
         return songsList
 
+
     def delete_song_in_playlist(self, name, username, songID):
         db = self.database()
         c = db.cursor()

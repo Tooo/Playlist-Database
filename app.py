@@ -7,8 +7,6 @@ from model.song import *
 from model.user import *
 
 app = Flask(__name__)
-
-
 @app.route('/', methods=['POST', 'GET'])
 def login_page():
     if request.method == 'POST':
@@ -21,6 +19,7 @@ def login_page():
 
 @app.route('/home', methods=['POST', 'GET'])
 def home_page():
+    playlistManager = PlaylistManager()
     userManager = UserManager()
     if 'login' in request.form:
         username = request.form['username']
@@ -31,25 +30,23 @@ def home_page():
             userManager.insert_user(user)
         else:
             message = "Hello " + username
-    # elif 'addSong' in request.form:
-    #     addSong = request.form['addSong']
-    #
-    # elif 'userRating' in request.form:
-    #     userRating = request.form['userRating']
+    #elif 'addSong' in request.form:
+    #    addSong = request.form['addSong']
+
+    #elif 'userRating' in request.form:
+    #    userRating = request.form['userRating']
     else:
         username = request.cookies.get('username')
         user = User(username)
         message = "Hello " + username
     genres = userManager.get_user_genre(user)
     songManager = SongManager()
-    songList = songManager.get_songs()
-    playlistManager = PlaylistManager()
+    songList=songManager.get_songs()
     playlists = playlistManager.get_user_playlists(username)
     listofgenres = playlistManager.genre_list(playlists, username)
     popular_songs = songManager.song_in_every_playlist()
     resp = make_response(
-        render_template("index.html", message=message, genres=genres, songList=songList, playlists=playlists,
-                        genrelists=listofgenres, popular_songs=popular_songs))
+        render_template("index.html", message=message, genres=genres, songList=songList, playlists=playlists,genrelists=listofgenres, popular_songs=popular_songs))
     resp.set_cookie('username', username)
     return resp
 
@@ -67,7 +64,28 @@ def create_playlist_button():
             playlistManager.insert_public_playlist(PublicPlaylist(name, username, time()))
     return redirect('/home#playlist')
 
+@app.route('/viewplaylistlogin', methods=['POST'])
+def view_playlist_button():
+    username = request.cookies.get('username')
+    name = request.form['plName']
+    playlistManager = PlaylistManager()
+    songManager = SongManager()
+    songList=songManager.get_songs()
+    if playlistManager.is_private(name,username)==True:
+        password = request.form['plPassword']
+        if playlistManager.password_check(name,username, password) == True:
+            playlistSong = playlistManager.get_songs_in_playlist(name,username)
+    else:
+        playlistSong = playlistManager.get_songs_in_playlist(name,username)
+        resp = make_response(render_template("playlist.html",songList=songList,playlistSong=playlistSong))
+        return resp
 
+@app.route('/viewplaylist', methods=['POST', 'GET'])
+def update_songList(playlistSong):
+    playlistSong = playlistManager.get_songs_in_playlist(name,username)
+    resp = make_response(render_template("index.html",playlistSong=playlistSong))
+    return resp
+    
 @app.route('/genreButton', methods=['POST'])
 def genre_button():
     username = request.cookies.get('username')
