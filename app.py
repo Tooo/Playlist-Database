@@ -95,20 +95,19 @@ def view_playlist_button():
     songList=songManager.get_songs()
     if playlistManager.is_private(name,username)==True:
         pass
-        #password = request.form['plPassword']
-        #if playlistManager.password_check(name,username, password) == True:
-
-        playlistSong = playlistManager.get_songs_in_playlist(name,username)
-        resp = make_response(render_template("playlist.html",songList=songList,playlistSong=playlistSong))
-        resp.set_cookie('playlist_name', name)
-        return resp
+        password = request.form['plPassword']
+        if playlistManager.password_check(name,username, password) == True:
+            playlistSong = playlistManager.get_songs_in_playlist(name,username)
+            resp = make_response(render_template("playlist.html",songList=songList,playlistSong=playlistSong))
+            resp.set_cookie('playlist_name', name)
+            return resp
+        else:
+            return redirect('/home#playlist')
     else:
         playlistSong = playlistManager.get_songs_in_playlist(name,username)
         resp = make_response(render_template("playlist.html",songList=songList,playlistSong=playlistSong))
         resp.set_cookie('playlist_name', name)
         return resp
-    return
-
 
 @app.route('/genreButton', methods=['POST'])
 def genre_button():

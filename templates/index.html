@@ -146,6 +146,8 @@
                                     <form action="http://localhost:5000/viewplaylistlogin" method="POST">
                                         <td>
                                             <button class="btn btn-outline-primary" id = "main_view" name="plName" value={{ playlist[0] }}>{{ playlist[0] }}</button>
+                                            <input type="password" class="form-control mt-2" id="main_view_pw" name="plPassword" placeholder="Enter password if available" style="width: 40%; margin-left: 30%">
+
                                         </td>
                                     </form>
 
@@ -172,12 +174,12 @@
                     </div>
 
                     <form class = "form-group form-inline">
-                        <div class="centered form-group form-inline pr-3">
+                        <div class="centered form-group form-inline ml-3 ">
                             <label>Playlist Name: </label>
-                            <input type="text" class="form-control" id="name" placeholder="My Pop Playlist" name="plName"required>
+                            <input type="text" class="form-control ml-3" id="name" placeholder="My Pop Playlist" name="plName"required>
                             <label>Password: </label>
                             <input id = plPassword type="password" class="form-control" name="plPassword">
-                            <button type="submit" class="btn btn-success">Submit</button>
+                            <button type="submit" class="btn btn-success ml-2">Submit</button>
                         </div>
 
                     </form>
