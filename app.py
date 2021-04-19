@@ -58,9 +58,10 @@ def home_page():
 @app.route('/addSong', methods=['POST'])
 def add_song_to_playlist():
     username = request.cookies.get('username')
+    name = request.cookies.get('play_list')
     addSong = request.form['addSong']
     playlistManager = PlaylistManager()
-    playlistManager.insert_song_in_playlist('My Pop List', username, addSong)
+    playlistManager.insert_song_in_playlist(name, username, addSong)
 
     return redirect('home#createplaylist')
 
