@@ -91,10 +91,12 @@ def view_playlist_button():
         if playlistManager.password_check(name,username, password) == True:
             playlistSong = playlistManager.get_songs_in_playlist(name,username)
             resp = make_response(render_template("playlist.html",songList=songList,playlistSong=playlistSong))
+            resp.set_cookie('playlist_name', playlist)
             return resp
     else:
         playlistSong = playlistManager.get_songs_in_playlist(name,username)
         resp = make_response(render_template("playlist.html",songList=songList,playlistSong=playlistSong))
+        resp.set_cookie('playlist_name', name)
         return resp
     return
 
