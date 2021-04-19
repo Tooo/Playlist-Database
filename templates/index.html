@@ -126,7 +126,7 @@
 
 				<div role="group">
 					<a class="btn btn-outline-primary" href = "#createplaylist" id = "main_create" style="float:right; margin-right: 10%">Create Playlist</a>
-					<a class="btn btn-outline-primary" href = "#viewplaylistlogin" id = "main_view" style="float:right; margin-right: 1%">View Playlist</a>
+
 				</div>
 
 				<br><br>
@@ -144,9 +144,9 @@
                             <tbody>
                             {% for playlist in genrelists %}
                                 <tr style = "background-color: white">
-                                    <form action="http://localhost:5000/viewPlaylist" method="POST">
+                                    <form action="http://localhost:5000/viewplaylistlogin" method="POST">
                                         <td>
-                                            <button class="btn btn-outline-primary" type="submit" name = playlistName value = {{ playlist[0] }}>{{ playlist[0] }}</button>
+                                            <button class="btn btn-outline-primary" id = "main_view" name="plName" value={{ playlist[0] }}>{{ playlist[0] }}</button>
                                         </td>
                                     </form>
 

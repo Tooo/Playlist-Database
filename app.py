@@ -58,12 +58,18 @@ def home_page():
 @app.route('/addSong', methods=['POST'])
 def add_song_to_playlist():
     username = request.cookies.get('username')
-    name = request.cookies.get('play_list')
+    name = request.cookies.get('playlist_name')
     addSong = request.form['addSong']
     playlistManager = PlaylistManager()
     playlistManager.insert_song_in_playlist(name, username, addSong)
 
-    return redirect('home#createplaylist')
+    songManager = SongManager()
+    songList = songManager.get_songs()
+
+    playlistSong = playlistManager.get_songs_in_playlist(name, username)
+
+    resp = make_response(render_template("playlist.html", songList=songList, playlistSong=playlistSong))
+    return resp
 
 
 @app.route('/createPlaylist', methods=['POST'])
@@ -88,12 +94,14 @@ def view_playlist_button():
     songManager = SongManager()
     songList=songManager.get_songs()
     if playlistManager.is_private(name,username)==True:
-        password = request.form['plPassword']
-        if playlistManager.password_check(name,username, password) == True:
-            playlistSong = playlistManager.get_songs_in_playlist(name,username)
-            resp = make_response(render_template("playlist.html",songList=songList,playlistSong=playlistSong))
-            resp.set_cookie('playlist_name', playlist)
-            return resp
+        pass
+        #password = request.form['plPassword']
+        #if playlistManager.password_check(name,username, password) == True:
+
+        playlistSong = playlistManager.get_songs_in_playlist(name,username)
+        resp = make_response(render_template("playlist.html",songList=songList,playlistSong=playlistSong))
+        resp.set_cookie('playlist_name', name)
+        return resp
     else:
         playlistSong = playlistManager.get_songs_in_playlist(name,username)
         resp = make_response(render_template("playlist.html",songList=songList,playlistSong=playlistSong))
