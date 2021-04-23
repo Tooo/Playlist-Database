@@ -33,6 +33,13 @@ python3 app.py
 localhost:5000
 ```
 
+## Features
+- Save your genres and playlists in your own account.
+- Create public or private playlists with passwords.
+- Add from 300 songs from our song database.
+- Rate each song, either upvoting or downvoting
+
+
 ## Demos
 ### Implementation Demo
 https://www.youtube.com/watch?v=SFK4WphyL1c
