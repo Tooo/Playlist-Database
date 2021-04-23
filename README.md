@@ -32,3 +32,42 @@ python3 app.py
 ```bash
 localhost:5000
 ```
+
+## Demos
+### Implementation Demo
+https://www.youtube.com/watch?v=SFK4WphyL1c
+
+### Application Demo
+https://www.youtube.com/watch?v=O42S7y5rHyQ
+
+## Planning 
+### ER Diagram
+![ER](https://github.com/Tooo/Playlist-Database/blob/main/static/images/ERdiagram.png)
+
+### Database Schema
+#### Relations
+Song [<ins>SongID</ins>, Name, Duration, Artist, Genre] <br/>
+User [<ins>Username</ins>] <br/>
+Playlist [<ins>Name, Username</ins>, Date] <br/>
+Public [<ins>Name, Username</ins>] <br/>
+Private [<ins>Name, Username</ins>, Password] <br/>
+Rate [<ins>Username, SongID</ins>, Rating] <br/>
+Contains [<ins>SongID, Name</ins>] <br/>
+Share [<ins>Username, Name, SuperUsername</ins>, Rating, Comment] <br/>
+UserGenres [<ins>Username, Genres</ins>]
+
+#### Foreign Keys
+Playlist.Username references User.Username <br/>
+Public.Name references Playlist.Name <br/>
+Public.Username references User.Username <br/>
+Private.Name references Playlist.Name <br/>
+Private.Username references User.Username <br/>
+Rate.Username references User.Username <br/>
+Rate.SongID references Song.SongID <br/>
+Contains.SongID references Song.SongID <br/>
+Contains.Name references Playlist.Name <br/>
+Share.Username references User.Username <br/>
+Share.SuperUsername references User.Username <br/>
+Share.Name references Playlist.Name <br/>
+UserGenres.Username references User.Username<br/>
+
