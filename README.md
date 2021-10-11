@@ -6,7 +6,11 @@ Other users can rate the private playlist.
 
 ## Installation
 1. Download and install [Python 3.9.](https://www.python.org/downloads/release/python-392/)
-2. Install required python packages.
+2. Git clone this repo
+```bash
+https://github.com/Tooo/Playlist-Database.git
+```
+4. Install required python packages.
 ```bash
 pip install -r requirement.txt
 ```
